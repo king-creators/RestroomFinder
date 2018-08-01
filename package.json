@@ -1,0 +1,63 @@
+{
+  "name": "restroom-finder",
+  "version": "0.1.0",
+  "private": true,
+  "devDependencies": {
+    "jest-expo": "~27.0.0",
+    "react-native-scripts": "^1.14.1",
+    "react-test-renderer": "16.3.1"
+  },
+  "main": "./node_modules/react-native-scripts/build/bin/crna-entry.js",
+  "scripts": {
+    "start": "react-native-scripts start",
+    "eject": "react-native-scripts eject",
+    "android": "react-native-scripts android",
+    "ios": "react-native-scripts ios",
+    "test": "jest",
+    "seed": "node seed.js"
+  },
+  "jest": {
+    "preset": "jest-expo"
+  },
+  "dependencies": {
+    "@types/expo": "27.0.6",
+    "@types/expo__vector-icons": "6.2.2",
+    "@types/react": "16.3.1",
+    "@types/react-native": "0.56.1",
+    "@types/react-navigation": "2.0.11",
+    "axios": "^0.18.0",
+    "body-parser": "^1.18.3",
+    "expo": "^27.0.1",
+    "express": "^4.16.3",
+    "express-session": "^1.15.6",
+    "passport": "^0.4.0",
+    "passport-google-oauth": "^1.0.0",
+    "path": "^0.12.7",
+    "pg": "^7.4.3",
+    "react": "^16.3.1",
+    "react-native": "https://github.com/expo/react-native/archive/sdk-28.0.0.tar.gz",
+    "react-native-dropdown": "0.0.6",
+    "react-native-elements": "^0.19.1",
+    "react-native-material-dropdown": "^0.11.1",
+    "react-native-modal-dropdown": "^0.6.2",
+    "react-native-picker-dropdown": "^0.1.1",
+    "react-native-picker-select": "^4.0.0",
+    "react-redux": "^5.0.7",
+    "redux-logger": "^3.0.6",
+    "redux-thunk": "^2.3.0",
+    "sequelize": "^4.38.0",
+    "volleyball": "^1.5.1",
+    "watchman": "^1.0.0"
+  },
+  "description": "This project was bootstrapped with [Create React Native App](https://github.com/react-community/create-react-native-app).",
+  "author": "",
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gsalami00/Stackathon.git"
+  },
+  "bugs": {
+    "url": "https://github.com/gsalami00/Stackathon/issues"
+  },
+  "homepage": "https://github.com/gsalami00/Stackathon#readme"
+}
