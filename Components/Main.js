@@ -1,18 +1,28 @@
-import React, { Component } from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { createStackNavigator } from "react-navigation";
+import Home from "./Home";
 import Login from "./Forms/Login";
-import Routes from "./routes";
+import SignUp from "./Forms/SignUp";
 
-export default class Main extends Component {
+// const Main = createStackNavigator({
+//   Home: { screen: Home },
+//   Login: { screen: Login },
+//   SignUp: { screen: SignUp }
+// });
+
+import React, { Component } from 'react'
+import { View, Text } from "react-native";
+
+ class Main extends Component {
   render() {
     return (
-      // <Router>
-      //   <Scene key="root">
-      //     <Scene key="login" component={Login} title="Login" initial />
-      //   </Scene>
-      // </Router>
-
-      <Routes />
-    );
+      <View>
+        <Text>
+          Hi
+        </Text>
+      </View>
+    )
   }
 }
+
+
+export default Main;
