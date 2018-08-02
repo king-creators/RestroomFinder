@@ -5,65 +5,74 @@ const users = [
   {
     firstName: "Adnan",
     lastName: "Adrian",
-    email: "adnan@adrian.com"
+    email: "adnan@adrian.com",
+    password: "password"
   },
   {
     firstName: "Ali",
     lastName: "Aftab",
-    email: "ali@aftab.com"
+    email: "ali@aftab.com",
+    password: "password"
   },
   {
     firstName: "Aaron",
     lastName: "Whitsit",
-    email: "aaron@whitsit.com"
+    email: "aaron@whitsit.com",
+    password: "password"
   },
   {
     firstName: "Prince",
     lastName: "Donkor",
-    email: "prince@donkor.com"
+    email: "prince@donkor.com",
+    password: "password"
   },
   {
     firstName: "Gini",
     lastName: "Salami",
-    email: "gini@salami.com"
+    email: "gini@salami.com",
+    password: "password"
   },
   {
     firstName: "Maureen",
     lastName: "Llamas",
-    email: "mau@llamas.com"
+    email: "mau@llamas.com",
+    password: "password"
   },
   {
     firstName: "Teppie",
     lastName: "Aquino",
-    email: "teppie@aquino.com"
+    email: "teppie@aquino.com",
+    password: "password"
   },
   {
-    id: 8,
     firstName: "Michael",
     lastName: "Lin",
-    email: "michael@lin.com"
+    email: "michael@lin.com",
+    password: "password"
   },
   {
     firstName: "Stephen",
     lastName: "Chow",
-    email: "stephen@chow.com"
+    email: "stephen@chow.com",
+    password: "password"
   },
   {
-    id: 10,
     firstName: "Synuhe",
     lastName: "Uribe",
-    email: "synuhe@uribe.com"
+    email: "synuhe@uribe.com",
+    password: "password"
   },
   {
-    id: 11,
     firstName: "Graham",
     lastName: "Johnson",
-    email: "graham@johnson.com"
+    email: "graham@johnson.com",
+    password: "password"
   },
   {
     firstName: "Francisco",
     lastName: "Huergo",
-    email: "francisco@huergo.com"
+    email: "francisco@huergo.com",
+    password: "password"
   }
 ];
 const restrooms = [
