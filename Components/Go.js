@@ -9,119 +9,103 @@ import CustomHeader from "./CustomHeader";
 import HomeView from "./HomeView";
 import ListResults from "./ListResults";
 import MapView from "react-native-maps";
-import Go from "Go";
-import Ionicons from "react-native-vector-icons/Ionicons";
 
-class Home extends Component {
-  // static navigationOptions = ({ navigation }) => ({
-  //   title: "Home",
-  //   headerLeft: (
-  //     <Icon
-  //       name="ios-menu"
-  //       style={{ paddingLeft: 10 }}
-  //       onPress={() => navigation.navigate("DrawerOpen")}
-  //     />
-  //   ),
-  //   drawerLabel: "Home",
-  //   drawerIcon: ({ tintColor }) => (
-  //     <Image
-  //       source="https://png.icons8.com/metro/1600/settings.png"
-  //       style={styles.icon}
-  //     />
-  //   )
-  // });
-
-  static navigationOptions = ({ navigation }) => {
-    return {
-      headerLeft: (
-        <View style={{ padding: 10 }}>
-          <Ionicons
-            name="md-menu"
-            size={24}
-            onPress={() => navigation.navigate("DrawerOpen")}
-          />
-        </View>
-      )
-    };
-  };
-
-  render() {
-    return (
-      <HomeScreenTabNavigator
-        screenProps={{ navigation: this.props.navigation }}
+class Go extends Component {
+  static navigationOptions = ({ navigation }) => ({
+    title: "Home",
+    headerLeft: (
+      <Icon
+        name="ios-menu"
+        style={{ paddingLeft: 10 }}
+        onPress={() => navigation.navigate("DrawerOpen")}
       />
-    );
-  }
+    ),
+    drawerLabel: "Home",
+    drawerIcon: ({ tintColor }) => (
+      <Image
+        source="https://png.icons8.com/metro/1600/settings.png"
+        style={styles.icon}
+      />
+    )
+  });
+
   // render() {
   //   return (
-  // <Container>
-  //   <CustomHeader
-  //     title="Home"
-  //     drawerOpen={() => this.props.navigation.navigate("DrawerOpen")}
-  //   />
+  //     <HomeScreenTabNavigator
+  //       screenProps={{ navigation: this.props.navigation }}
+  //     />
+  //   );
+  // }
+  render() {
+    return (
+      <Container>
+        <CustomHeader
+          title="Home"
+          drawerOpen={() => this.props.navigation.navigate("DrawerOpen")}
+        />
 
-  //   <Content
-  //     contentContainerStyle={{
-  //       flex: 1,
-  //       alignItems: "center",
-  //       justifyContent: "center",
-  //       padding: 10
-  //     }}
-  //   >
-  //     {/* <Button onPress={() => this.props.navigation.navigate("Login")} full> */}
-  //     {/* <Text style={{ color: "Blue" }}>Home</Text> */}
-  //     {/* </Button> */}
-  //     <MapView
-  //       style={styles.map}
-  //       initialRegion={{
-  //         latitude: 37.78825,
-  //         longitude: -122.4324,
-  //         latitudeDelta: 0.0922,
-  //         longitudeDelta: 0.0421
-  //       }}
-  //     >
-  //       <MapView.Marker
-  //         coordinate={{
-  //           latitude: 37.78825,
-  //           longitude: -122.4324
-  //         }}
-  //       >
-  //         <View style={styles.radius}>
-  //           <View style={styles.marker} />
-  //         </View>
-  //       </MapView.Marker>
-  //     </MapView>
-  //   </Content>
-  // </Container>
-  // );
-}
-// }
-
-export default Home;
-
-const HomeScreenTabNavigator = new TabNavigator({
-  Home: {
-    screen: HomeView,
-    navigationOptions: {
-      tabBarLabel: "Home",
-      tabBarIcon: () => <Ionicons name="md-compass" size={24} />
-    }
-  },
-  ListResults: {
-    screen: ListResults,
-    navigationOptions: {
-      tabBarLabel: "View List",
-      tabBarIcon: () => <Ionicons name="md-compass" size={24} />
-    }
-  },
-  Go: {
-    screen: Go,
-    navigationOptions: {
-      tabBarLabel: "Go",
-      tabBarIcon: () => <Ionicons name="md-compass" size={24} />
-    }
+        <Content
+          contentContainerStyle={{
+            flex: 1,
+            alignItems: "center",
+            justifyContent: "center",
+            padding: 10
+          }}
+        >
+          {/* <Button onPress={() => this.props.navigation.navigate("Login")} full> */}
+          {/* <Text style={{ color: "Blue" }}>Home</Text> */}
+          {/* </Button> */}
+          <MapView
+            style={styles.map}
+            initialRegion={{
+              latitude: 37.78825,
+              longitude: -122.4324,
+              latitudeDelta: 0.0922,
+              longitudeDelta: 0.0421
+            }}
+          >
+            <MapView.Marker
+              coordinate={{
+                latitude: 37.78825,
+                longitude: -122.4324
+              }}
+            >
+              <View style={styles.radius}>
+                <View style={styles.marker} />
+              </View>
+            </MapView.Marker>
+          </MapView>
+        </Content>
+      </Container>
+    );
   }
-});
+}
+
+export default Go;
+
+// const HomeScreenTabNavigator = new TabNavigator({
+//   Home: {
+//     screen: HomeView,
+//     navigationOptions: {
+//       tabBarLabel: "Home",
+//       tabBarIcon: () => <Ionicons name="md-compass" size={24} />
+//     }
+//   },
+//   ListResults: {
+//     screen: ListResults,
+//     navigationOptions: {
+//       tabBarLabel: "View List",
+//       tabBarIcon: () => <Ionicons name="md-compass" size={24} />
+//     }
+//   },
+//   HomeView: {
+//     screen: HomeView,
+//     navigationOptions: {
+//       tabBarLabel: "Go",
+//       tabBarIcon: () => <Ionicons name="md-compass" size={24} />
+//     }
+//   }
+// });
 
 const styles = StyleSheet.create({
   icon: {
