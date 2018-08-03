@@ -1,39 +1,78 @@
-import { createStackNavigator } from "react-navigation";
+import React, { Component } from "react";
+import { View, Text, StyleSheet, ScrollView, Image } from "react-native";
+
+//library imports
+import { Container, Content, Icon, Header, Body } from "native-base";
+import {
+  createDrawerNavigator,
+  StackNavigator,
+  DrawerItems,
+  SafeAreaView
+} from "react-navigation";
+
+//custom files
 import Home from "./Components/Home";
-import Login from "./Components/Forms/Login";
 import SignUp from "./Components/Forms/SignUp";
+import Login from "./Components/Forms/Login";
 
-import MapView from 'react-native-maps';
+export default class App extends Component {
+  render() {
+    return <MyApp />;
+  }
+}
 
-const App = createStackNavigator({
-  Home: { screen: Home },
-  Login: { screen: Login },
-  SignUp: { screen: SignUp }
-});
+const CustomDrawerContentComponent = props => (
+  <Container>
+    <Header style={styles.drawerHeader}>
+      <Body>
+        <Image
+          style={styles.drawerImage}
+          source="https://png.icons8.com/metro/1600/settings.png"
+        />
+      </Body>
+    </Header>
+    <Content>
+      <DrawerItems {...props} />
+    </Content>
+  </Container>
+);
 
-// import { View, Text } from "react-native";
-import { StyleSheet } from 'react-native';
-
-// import React, { Component } from 'react'
-
-// class App extends Component {
-//   render() {
-//     return (
-
-
-//     )
-//   }
-// }
+const MyApp = createDrawerNavigator(
+  {
+    // For each screen that you can navigate to, create a new entry like this:
+    Home: {
+      screen: Home
+    },
+    Login: {
+      screen: Login
+    },
+    SignUp: {
+      screen: SignUp
+    }
+  },
+  {
+    initialRouteName: "Home",
+    drawerPosition: "left",
+    contentComponent: CustomDrawerContentComponent,
+    drawerOpenRoute: "DrawerOpen",
+    drawerCloseRoute: "DrawerClose",
+    drawerToggleRoute: "DrawerToggle"
+  }
+);
 
 const styles = StyleSheet.create({
-  map : {
-    left: 0,
-    right: 0,
-    top : 0,
-    bottom: 0,
-    position: 'absolute'
+  container: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center"
+  },
+  drawerHeader: {
+    height: 200,
+    backgroundColor: "white"
+  },
+  drawerImage: {
+    height: 150,
+    width: 150,
+    borderRadius: 75
   }
-})
-
-
-export default App;
+});
