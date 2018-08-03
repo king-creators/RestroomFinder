@@ -4,29 +4,36 @@ import { Container, Content, Icon, Button } from "native-base";
 import CustomHeader from "../CustomHeader";
 
 class Login extends Component {
-  static navigationOptions = ({ navigation }) => ({
-    title: "Login",
-    headerLeft: (
-      <Icon
-        name="ios-menu"
-        style={{ paddingLeft: 10 }}
-        onPress={() => navigation.navigate("DrawerOpen")}
-      />
-    ),
-    drawerIcon: (
-      <Image
-        source="https://png.icons8.com/metro/1600/settings.png"
-        style={[styles.icon]}
-      />
-    )
-  });
+  constructor(props) {
+    super(props);
+  }
+  // static navigationOptions = ({ navigation }) => ({
+  //   title: "Login",
+  //   headerLeft: (
+  //     // <Icon
+  //     //   name="ios-menu"
+  //     //   style={{ paddingLeft: 10 }}
+  //     //   onPress={() => navigation.navigate("DrawerOpen")}
+  //     // />
+  //   ),
+  //   drawerIcon: (
+  //     <Image
+  //       source="https://png.icons8.com/metro/1600/settings.png"
+  //       style={[styles.icon]}
+  //     />
+  //   )
+  // });
 
   render() {
     return (
       <Container>
         <CustomHeader
           title="Login"
-          drawerOpen={() => this.props.navigation.navigate("DrawerOpen")}
+          drawerOpen={() => {
+            this.props.navigation.toggleDrawer({
+              side: "left"
+            });
+          }}
         />
         <Content
           contentContainerStyle={{

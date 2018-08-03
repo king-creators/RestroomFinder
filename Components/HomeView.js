@@ -1,39 +1,86 @@
 import React, { Component } from "react";
-import { View, Text, StyleSheet, Image } from "react-native";
+import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
 
 //library imports
-import { Icon, Button, Container, Header, Content, Left } from "native-base";
+import {
+  Icon,
+  Button,
+  Container,
+  Header,
+  Content,
+  Left,
+  Right,
+  Body,
+  Title
+} from "native-base";
 //custom components imports
 import CustomHeader from "./CustomHeader";
 import MapView from "react-native-maps";
+import Ionicons from "react-native-vector-icons/Ionicons";
+import Hamburger from "react-native-hamburger";
 
 class HomeView extends Component {
-  static navigationOptions = ({ navigation }) => ({
-    title: "Home",
-    headerLeft: (
-      <Icon
-        name="ios-menu"
-        style={{ paddingLeft: 10 }}
-        onPress={() => navigation.navigate("DrawerOpen")}
-      />
-    ),
-    drawerLabel: "Home",
-    drawerIcon: ({ tintColor }) => (
-      <Image
-        source="https://png.icons8.com/metro/1600/settings.png"
-        style={styles.icon}
-      />
-    )
-  });
+  constructor(props) {
+    super(props);
+  }
+  // static navigationOptions = ({ navigation }) => ({
+  //   title: "Home",
+  //   headerLeft: (
+  //     <Icon
+  //       name="ios-menu"
+  //       style={{ paddingLeft: 10 }}
+  //       onPress={() => navigation.navigate("DrawerOpen")}
+  //     />
+  //   ),
+  //   drawerIcon: (
+  //     <Image
+  //       source="https://png.icons8.com/metro/1600/settings.png"
+  //       style={[styles.icon]}
+  //     />
+  //   )
+  // });
+  // static navigationOptions = ({ navigation }) => ({
+  //   title: "Home",
+  //   headerLeft: (
+  //     <Icon
+  //       name="ios-menu"
+  //       style={{ paddingLeft: 10 }}
+  //       onPress={() => navigation.navigate("DrawerOpen")}
+  //     />
+  //   )
+  // drawerIcon: (
+  //   <Image
+  //     source="https://png.icons8.com/metro/1600/settings.png"
+  //     style={[styles.icon]}
+  //   />
+  // )
+  // });
 
   render() {
+    // console.log(this.props);
     return (
       <Container>
-        <CustomHeader
+        {/* <CustomHeader
           title="Home"
-          drawerOpen={() => this.props.navigation.navigate("DrawerOpen")}
-        />
-
+          navigation={this.props.screenProps.navigation}
+        /> */}
+        {/* <Hamburger
+          active={this.state.active}
+          type="cross"
+          onPress={() => this.setState({ active: !this.state.active })}
+        /> */}
+        {/* <CustomHeader title="Home" {...screenProps} /> */}
+        {/* <Header>
+          <Left>
+            <Button transparent onPress={() => navigate("DrawerToggle")}>
+              <Icon name="menu" />
+            </Button>
+          </Left>
+          <Body>
+            <Title>HomeScreen</Title>
+          </Body>
+          <Right />
+        </Header> */}
         <Content
           contentContainerStyle={{
             flex: 1,

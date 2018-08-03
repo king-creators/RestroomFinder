@@ -32,22 +32,22 @@ class SignUp extends Component {
     console.log(this.state);
     // this.props.addUser(this.state);
   }
-  static navigationOptions = ({ navigation }) => ({
-    title: "Sign Up",
-    headerLeft: (
-      <Icon
-        name="ios-menu"
-        style={{ paddingLeft: 10 }}
-        onPress={() => navigation.navigate("DrawerOpen")}
-      />
-    ),
-    drawerIcon: (
-      <Image
-        source="https://png.icons8.com/metro/1600/settings.png"
-        style={[styles.icon]}
-      />
-    )
-  });
+  // static navigationOptions = ({ navigation }) => ({
+  //   title: "Sign Up",
+  //   headerLeft: (
+  //     // <Icon
+  //     //   name="ios-menu"
+  //     //   style={{ paddingLeft: 10 }}
+  //     //   onPress={() => navigation.navigate("DrawerOpen")}
+  //     // />
+  //   ),
+  //   drawerIcon: (
+  //     <Image
+  //       source="https://png.icons8.com/metro/1600/settings.png"
+  //       style={[styles.icon]}
+  //     />
+  //   )
+  // });
   render() {
     return (
       <Container>
