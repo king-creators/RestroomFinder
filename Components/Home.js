@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View, Text, StyleSheet, Image } from "react-native";
+import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
 
 //library imports
 import { Icon, Button, Container, Header, Content, Left } from "native-base";
@@ -13,6 +13,36 @@ import Go from "./Go";
 import Ionicons from "react-native-vector-icons/Ionicons";
 
 class Home extends Component {
+  // static navigationOptions = ({ navigation }) => {
+  //   return {
+  //     headerLeft: (
+  //       <View style={{ padding: 10 }}>
+  //         <Ionicons
+  //           name="md-menu"
+  //           size={24}
+  //           onPress={() => navigation.navigate("DrawerOpen")}
+  //         />
+  //       </View>
+  //     )
+  //   };
+  // };
+  static navigationOptions = ({ navigation }) => ({
+    title: "Home",
+    headerLeft: (
+      <Icon
+        name="ios-menu"
+        style={{ paddingLeft: 10 }}
+        onPress={() => navigation.navigate("DrawerOpen")}
+      />
+    ),
+    drawerLabel: "Notification",
+    drawerIcon: ({ tintColor }) => (
+      <Image
+        source="https://camo.githubusercontent.com/f8ea5eab7494f955e90f60abc1d13f2ce2c2e540/68747470733a2f2f662e636c6f75642e6769746875622e636f6d2f6173736574732f323037383234352f3235393331332f35653833313336322d386362612d313165322d383435332d6536626439353663383961342e706e67"
+        style={styles.icon}
+      />
+    )
+  });
   // static navigationOptions = ({ navigation }) => ({
   //   title: "Home",
   //   headerLeft: (
@@ -31,25 +61,37 @@ class Home extends Component {
   //   )
   // });
 
-  static navigationOptions = ({ navigation }) => {
-    return {
-      headerLeft: (
-        <View style={{ padding: 10 }}>
-          <Ionicons
-            name="md-menu"
-            size={24}
-            onPress={() => navigation.navigate("DrawerOpen")}
-          />
-        </View>
-      )
-    };
-  };
+  // static navigationOptions = ({ navigation }) => {
+  //   return {
+  //     headerLeft: (
+  //       <TouchableOpacity
+  //         onPress={() => {
+  //           navigation.toggleDrawer({
+  //             side: "left"
+  //           });
+  //         }}
+  //       >
+  //         <View style={{ padding: 10 }}>
+  //           <Ionicons name="md-menu" size={24} />
+  //         </View>
+  //       </TouchableOpacity>
+  //     )
+  //   };
+  // };
 
   render() {
+    // console.log(this.props);
     return (
-      <HomeScreenTabNavigator
-        screenProps={{ navigation: this.props.navigation }}
-      />
+      <React.Fragment>
+        <CustomHeader
+          title="Home"
+          openDrawer={() => this.props.navigation.navigate("DrawerOpen")}
+          screenProps={{ navigation: this.props.navigation }}
+        />
+        <HomeScreenTabNavigator
+          screenProps={{ navigation: this.props.navigation }}
+        />
+      </React.Fragment>
     );
   }
 }
