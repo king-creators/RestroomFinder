@@ -27,14 +27,7 @@ class Login extends Component {
   render() {
     return (
       <Container>
-        <CustomHeader
-          title="Login"
-          drawerOpen={() => {
-            this.props.navigation.toggleDrawer({
-              side: "left"
-            });
-          }}
-        />
+        <CustomHeader title="Login" />
         <Content
           contentContainerStyle={{
             flex: 1,

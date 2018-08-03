@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { View, Text, StyleSheet } from "react-native";
 
 import { Header, Body, Title, Content, Left, Icon, Right } from "native-base";
+import { withNavigation, DrawerActions } from "react-navigation";
 
 class CustomHeader extends Component {
   constructor(props) {
@@ -12,11 +13,10 @@ class CustomHeader extends Component {
     this.props.navigation.dispatch(DrawerActions.toggleDrawer());
   };
   render() {
-    console.log(this.props);
     return (
       <Header>
         <Left>
-          <Icon name="ios-menu" onPress={() => this.props.openDrawer()} />
+          <Icon name="ios-menu" onPress={() => this.toggleDrawer()} />
         </Left>
         <Body>
           <Title>{this.props.title}</Title>
@@ -26,4 +26,4 @@ class CustomHeader extends Component {
     );
   }
 }
-export default CustomHeader;
+export default withNavigation(CustomHeader);

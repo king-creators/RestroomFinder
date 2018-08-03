@@ -20,67 +20,9 @@ import Ionicons from "react-native-vector-icons/Ionicons";
 import Hamburger from "react-native-hamburger";
 
 class HomeView extends Component {
-  constructor(props) {
-    super(props);
-  }
-  // static navigationOptions = ({ navigation }) => ({
-  //   title: "Home",
-  //   headerLeft: (
-  //     <Icon
-  //       name="ios-menu"
-  //       style={{ paddingLeft: 10 }}
-  //       onPress={() => navigation.navigate("DrawerOpen")}
-  //     />
-  //   ),
-  //   drawerIcon: (
-  //     <Image
-  //       source="https://png.icons8.com/metro/1600/settings.png"
-  //       style={[styles.icon]}
-  //     />
-  //   )
-  // });
-  // static navigationOptions = ({ navigation }) => ({
-  //   title: "Home",
-  //   headerLeft: (
-  //     <Icon
-  //       name="ios-menu"
-  //       style={{ paddingLeft: 10 }}
-  //       onPress={() => navigation.navigate("DrawerOpen")}
-  //     />
-  //   )
-  // drawerIcon: (
-  //   <Image
-  //     source="https://png.icons8.com/metro/1600/settings.png"
-  //     style={[styles.icon]}
-  //   />
-  // )
-  // });
-
   render() {
-    // console.log(this.props);
     return (
       <Container>
-        {/* <CustomHeader
-          title="Home"
-          navigation={this.props.screenProps.navigation}
-        /> */}
-        {/* <Hamburger
-          active={this.state.active}
-          type="cross"
-          onPress={() => this.setState({ active: !this.state.active })}
-        /> */}
-        {/* <CustomHeader title="Home" {...screenProps} /> */}
-        {/* <Header>
-          <Left>
-            <Button transparent onPress={() => navigate("DrawerToggle")}>
-              <Icon name="menu" />
-            </Button>
-          </Left>
-          <Body>
-            <Title>HomeScreen</Title>
-          </Body>
-          <Right />
-        </Header> */}
         <Content
           contentContainerStyle={{
             flex: 1,
