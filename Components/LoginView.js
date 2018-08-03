@@ -9,7 +9,7 @@ import CustomHeader from "./CustomHeader";
 import ListResults from "./ListResults";
 import MapView from "react-native-maps";
 
-class HomeView extends Component {
+class LoginView extends Component {
   static navigationOptions = ({ navigation }) => ({
     title: "Home",
     headerLeft: (
@@ -32,10 +32,9 @@ class HomeView extends Component {
     return (
       <Container>
         <CustomHeader
-          title="Home"
+          title="Login"
           drawerOpen={() => this.props.navigation.navigate("DrawerOpen")}
         />
-
         <Content
           contentContainerStyle={{
             flex: 1,
@@ -44,33 +43,16 @@ class HomeView extends Component {
             padding: 10
           }}
         >
-          <MapView
-            style={styles.map}
-            initialRegion={{
-              latitude: 37.78825,
-              longitude: -122.4324,
-              latitudeDelta: 0.0922,
-              longitudeDelta: 0.0421
-            }}
-          >
-            <MapView.Marker
-              coordinate={{
-                latitude: 37.78825,
-                longitude: -122.4324
-              }}
-            >
-              <View style={styles.radius}>
-                <View style={styles.marker} />
-              </View>
-            </MapView.Marker>
-          </MapView>
+          <Button full onPress={() => this.props.navigation.navigate("Home")}>
+            <Text style={{ color: "white" }}>Go to Home screen</Text>
+          </Button>
         </Content>
       </Container>
     );
   }
 }
 
-export default HomeView;
+export default LoginView;
 
 const styles = StyleSheet.create({
   icon: {

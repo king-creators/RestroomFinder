@@ -3,12 +3,7 @@ import { View, Text, StyleSheet, ScrollView, Image } from "react-native";
 
 //library imports
 import { Container, Content, Icon, Header, Body } from "native-base";
-import {
-  createDrawerNavigator,
-  StackNavigator,
-  DrawerItems,
-  SafeAreaView
-} from "react-navigation";
+import { createDrawerNavigator, DrawerItems } from "react-navigation";
 
 //custom files
 import Home from "./Components/Home";
@@ -50,6 +45,7 @@ const MyApp = createDrawerNavigator(
       screen: SignUp
     }
   },
+
   {
     initialRouteName: "Home",
     drawerPosition: "left",
