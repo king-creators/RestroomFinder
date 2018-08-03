@@ -12,7 +12,7 @@ import MapView from "react-native-maps";
 
 class Go extends Component {
   static navigationOptions = ({ navigation }) => ({
-    title: "Home",
+    title: "Nearest Restrooms",
     headerLeft: (
       <Icon
         name="ios-menu"
@@ -20,7 +20,7 @@ class Go extends Component {
         onPress={() => navigation.navigate("DrawerOpen")}
       />
     ),
-    drawerLabel: "Home",
+    drawerLabel: "Nearest Restrooms",
     drawerIcon: ({ tintColor }) => (
       <Image
         source="https://png.icons8.com/metro/1600/settings.png"
@@ -28,19 +28,11 @@ class Go extends Component {
       />
     )
   });
-
-  // render() {
-  //   return (
-  //     <HomeScreenTabNavigator
-  //       screenProps={{ navigation: this.props.navigation }}
-  //     />
-  //   );
-  // }
   render() {
     return (
       <Container>
         <CustomHeader
-          title="Home"
+          title="Nearest You"
           drawerOpen={() => this.props.navigation.navigate("DrawerOpen")}
         />
 
@@ -52,9 +44,6 @@ class Go extends Component {
             padding: 10
           }}
         >
-          {/* <Button onPress={() => this.props.navigation.navigate("Login")} full> */}
-          {/* <Text style={{ color: "Blue" }}>Home</Text> */}
-          {/* </Button> */}
           <MapView
             style={styles.map}
             initialRegion={{

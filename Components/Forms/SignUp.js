@@ -11,6 +11,11 @@ import { connect } from "react-redux";
 import { createStackNavigator } from "react-navigation";
 import { Container, Content, Icon } from "native-base";
 import CustomHeader from "../CustomHeader";
+import { createBottomTabNavigator } from "react-navigation";
+import HomeView from "../HomeView";
+import ListResults from "../ListResults";
+import Go from "../Go";
+import Ionicons from "react-native-vector-icons/Ionicons";
 
 class SignUp extends Component {
   constructor(props) {
@@ -28,7 +33,7 @@ class SignUp extends Component {
     // this.props.addUser(this.state);
   }
   static navigationOptions = ({ navigation }) => ({
-    title: "SignUp",
+    title: "Sign Up",
     headerLeft: (
       <Icon
         name="ios-menu"
@@ -47,7 +52,7 @@ class SignUp extends Component {
     return (
       <Container>
         <CustomHeader
-          title="Login"
+          title="Sign Up"
           drawerOpen={() => this.props.navigation.navigate("DrawerOpen")}
         />
         <Content
@@ -98,20 +103,5 @@ const styles = StyleSheet.create({
     width: 24
   }
 });
-
-// const mapDispatch = dispatch => ({
-//   addUser: user => dispatch(addUser(user))
-// });
-
-// const SignUpComp = connect(
-//   null,
-//   mapDispatch
-// )(SignUp);
-
-// export default createStackNavigator({
-//   Home: {
-//     screen: SignUpComp
-//   }
-// });
 
 export default SignUp;

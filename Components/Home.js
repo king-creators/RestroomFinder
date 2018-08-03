@@ -3,13 +3,13 @@ import { View, Text, StyleSheet, Image } from "react-native";
 
 //library imports
 import { Icon, Button, Container, Header, Content, Left } from "native-base";
-import { TabNavigator } from "react-navigation";
+import { createBottomTabNavigator } from "react-navigation";
 //custom components imports
 import CustomHeader from "./CustomHeader";
 import HomeView from "./HomeView";
 import ListResults from "./ListResults";
 import MapView from "react-native-maps";
-import Go from "Go";
+import Go from "./Go";
 import Ionicons from "react-native-vector-icons/Ionicons";
 
 class Home extends Component {
@@ -52,54 +52,11 @@ class Home extends Component {
       />
     );
   }
-  // render() {
-  //   return (
-  // <Container>
-  //   <CustomHeader
-  //     title="Home"
-  //     drawerOpen={() => this.props.navigation.navigate("DrawerOpen")}
-  //   />
-
-  //   <Content
-  //     contentContainerStyle={{
-  //       flex: 1,
-  //       alignItems: "center",
-  //       justifyContent: "center",
-  //       padding: 10
-  //     }}
-  //   >
-  //     {/* <Button onPress={() => this.props.navigation.navigate("Login")} full> */}
-  //     {/* <Text style={{ color: "Blue" }}>Home</Text> */}
-  //     {/* </Button> */}
-  //     <MapView
-  //       style={styles.map}
-  //       initialRegion={{
-  //         latitude: 37.78825,
-  //         longitude: -122.4324,
-  //         latitudeDelta: 0.0922,
-  //         longitudeDelta: 0.0421
-  //       }}
-  //     >
-  //       <MapView.Marker
-  //         coordinate={{
-  //           latitude: 37.78825,
-  //           longitude: -122.4324
-  //         }}
-  //       >
-  //         <View style={styles.radius}>
-  //           <View style={styles.marker} />
-  //         </View>
-  //       </MapView.Marker>
-  //     </MapView>
-  //   </Content>
-  // </Container>
-  // );
 }
-// }
 
 export default Home;
 
-const HomeScreenTabNavigator = new TabNavigator({
+const HomeScreenTabNavigator = new createBottomTabNavigator({
   Home: {
     screen: HomeView,
     navigationOptions: {
