@@ -8,6 +8,7 @@ import {
 } from "react-native-elements";
 import { auth } from "../../store/thunks";
 import { connect } from "react-redux";
+import store from "../../store/store";
 
 class Login extends Component {
   constructor(props) {
@@ -20,7 +21,7 @@ class Login extends Component {
   }
   handleSubmit(evt) {
     evt.preventDefault();
-    this.props.auth(this.state);
+    store.dispatch(auth(this.state));
   }
   render() {
     return (
