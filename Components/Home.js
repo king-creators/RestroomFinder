@@ -6,12 +6,13 @@ import { StyleSheet } from 'react-native';
 
 class Home extends React.Component {
   static navigationOptions = {
-    title: "Welcome"
+    title: "Do you have to go?"
   };
   
   render() {
     const { navigate } = this.props.navigation;
     return (
+
         <MapView
         style={styles.map}
           initialRegion={{
@@ -32,6 +33,7 @@ class Home extends React.Component {
         </View> 
         </MapView.Marker>
           </MapView>
+
     );
   }
 }

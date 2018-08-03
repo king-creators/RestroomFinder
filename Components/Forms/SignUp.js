@@ -9,6 +9,7 @@ import {
 import { addUser } from "../../store/thunks";
 import { connect } from "react-redux";
 import { createStackNavigator } from "react-navigation";
+import store from "../../store/store";
 
 class SignUp extends Component {
   constructor(props) {
@@ -23,9 +24,10 @@ class SignUp extends Component {
   }
   onSubmit() {
     // console.log(this.state);
-    this.props.addUser(this.state);
+    store.dispatch(addUser(this.state));
   }
   render() {
+    const { navigate } = this.props.navigation;
     return (
       <View>
         <FormLabel>First Name</FormLabel>
@@ -59,17 +61,13 @@ class SignUp extends Component {
   }
 }
 
-const mapDispatch = dispatch => ({
-  addUser: user => dispatch(addUser(user))
-});
+// const mapDispatch = dispatch => ({
+//   addUser: user => dispatch(addUser(user))
+// });
 
-const SignUpComp = connect(
-  null,
-  mapDispatch
-)(SignUp);
+// const SignUpComp = connect(
+//   null,
+//   mapDispatch
+// )(SignUp);
 
-export default createStackNavigator({
-  Home: {
-    screen: SignUpComp
-  }
-});
+export default SignUp;
