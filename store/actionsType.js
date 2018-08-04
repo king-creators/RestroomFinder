@@ -5,3 +5,5 @@ export const ADD_RESTROOM = "ADD_RESTROOM";
 export const EDIT_RESTROOM = "EDIT_RESTROOM";
 
 export const GET_USER = "GET_USER";
+
+export const GOT_RESTROOM = 'GOT_RESTROOM'

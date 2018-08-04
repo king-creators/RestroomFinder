@@ -19,3 +19,10 @@ client.search(searchRequest).then(response => {
 }).catch(e => {
   console.log(e);
 });
+
+const getRestroom = async (searchRequest)=>{
+  const result = await client.search(searchRequest)
+  const result2 = result.jsonBody.businesses;
+  const final = JSON.stringify(result2,null,4);
+  
+}
