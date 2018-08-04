@@ -44,11 +44,11 @@ const styles = StyleSheet.create({
     alignItems: "center"
   },
   image: {
-    width: 25,
-    height: 25
+    width: 15,
+    height: 15
   },
   text: {
-    fontSize: 20,
+    fontSize: 15,
     marginLeft: 10,
     marginRight: 10
   }
