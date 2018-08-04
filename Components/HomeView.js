@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
+import { View, Text, StyleSheet, Image, TouchableOpacity, Dimensions } from "react-native";
 
 //library imports
 import {
@@ -14,25 +14,83 @@ import {
   Title
 } from "native-base";
 //custom components imports
-import MapView from "react-native-maps";
 import CustomHeader from "./CustomHeader";
-class HomeView extends Component {
-  static navigationOptions = ({ navigation }) => ({
-    title: "Home",
-    drawerIcon: () => <Ionicons name="md-home" size={24} />
-    // (
-    // <Image
-    //   source="https://png.icons8.com/metro/1600/settings.png"
-    //   style={[styles.icon]}
-    // />
-    //   <ion-icon ios="ios-log-in" md="md-log-in" />
+import MapView from "react-native-maps";
+import Ionicons from "react-native-vector-icons/Ionicons";
+import Hamburger from "react-native-hamburger";
+//--------------------------------------------------------------------
+import {connect} from 'react-redux'
+import {getRestroom} from '../store/thunks'
+//--------------------------------------------------------------------
+const {width,height } = Dimensions.get('window')
+const SCREEN_HEIGHT = height
+const SCREEN_WIDTH = width
+const ASPECT_RATION = SCREEN_WIDTH / SCREEN_HEIGHT
+const LATTITUDE_DELTA = 0.0922
+const LONGTITUDE_DELTA = LATTITUDE_DELTA * ASPECT_RATION
 
-    // )
-  });
+class HomeView extends Component {
+  constructor(props){
+    super(props)
+    this.state ={
+      initialPostion : {
+        latitude: 0,
+        longitude: 0,
+        latitudeDelta: 0,
+        longitudeDelta: 0,
+        error: null
+      },
+      markerPosition: {
+        latitude: 0,
+        longitude: 0
+      }
+    }
+  }
+  
+  componentDidMount(){
+    this.props.getRestroom()
+    navigator.geolocation.getCurrentPosition(
+      (position)=> {
+        let lat = parseFloat(position.coords.latitude)
+        let long = parseFloat(position.coords.longitude)
+
+        const initalRegion = {
+          latitude: lat,
+          longitude: long,
+          latitudeDelta: LATTITUDE_DELTA,
+          longitudeDelta: LONGTITUDE_DELTA,
+        }
+        this.setState({initialPostion: initalRegion})
+        this.setState({markerPosition: initalRegion})
+
+      },(error)=> this.setState({error: error.message}),
+      {enableHighAccuracy: true, timeout:2000, maximumAge: 1000, distanceFilter : 10}
+    );
+    this.watchId = navigator.geolocation.watchPosition((position)=>{
+      let lat = parseFloat(position.coords.latitude)
+      let long = parseFloat(position.coords.longitude)
+      let lastRegion = {
+        latitude: lat,
+        longitude: long,
+        latitudeDelta: LATTITUDE_DELTA,
+        longitudeDelta: LONGTITUDE_DELTA,
+      }
+      this.setState({initialPostion: lastRegion})
+      this.setState({markerPosition: lastRegion})
+    })
+  }
+
+  componentWillUnmount(){
+    navigator.geolocation.clearWatch(this.watchId)
+  }
+
+
   render() {
+    console.log(this.props.restroom)
+  const allRestrooms = (this.props.restroom)
+  console.log(allRestrooms)
     return (
       <Container>
-        <CustomHeader title="Home" />
         <Content
           contentContainerStyle={{
             flex: 1,
@@ -41,25 +99,19 @@ class HomeView extends Component {
             padding: 10
           }}
         >
-          <MapView
+            <MapView
             style={styles.map}
-            initialRegion={{
-              latitude: 37.78825,
-              longitude: -122.4324,
-              latitudeDelta: 0.0922,
-              longitudeDelta: 0.0421
-            }}
+            region={this.state.initialPostion}
           >
             <MapView.Marker
-              coordinate={{
-                latitude: 37.78825,
-                longitude: -122.4324
-              }}
+              coordinate={this.state.markerPosition}
             >
               <View style={styles.radius}>
                 <View style={styles.marker} />
               </View>
             </MapView.Marker>
+              {/* restrooms */}
+
           </MapView>
         </Content>
       </Container>
@@ -67,7 +119,19 @@ class HomeView extends Component {
   }
 }
 
-export default HomeView;
+const MapDispatchToProps = (dispatch) => {
+  return {
+    getRestroom : ()=> dispatch(getRestroom()) 
+  }
+}
+
+const MapStateToProps = state => {
+  return {
+    restroom : state.restroom
+  }
+}
+
+export default connect(MapStateToProps ,MapDispatchToProps)(HomeView)
 
 const styles = StyleSheet.create({
   icon: {
@@ -101,3 +165,74 @@ const styles = StyleSheet.create({
     backgroundColor: "#007AFF"
   }
 });
+
+
+
+
+
+
+
+// {allRestrooms.length < 1 ? 
+//   <MapView
+//   style={styles.map}
+//   initialRegion={{
+//     latitude: 40.704958,
+//     longitude:  -74.009139,
+//     latitudeDelta: 0.0922,
+//     longitudeDelta: 0.0421
+//   }}
+// >
+//   <MapView.Marker
+//     coordinate={{
+//       latitude: 40.704958,
+//       longitude:  -74.009139
+//     }}
+//   >
+//     <View style={styles.radius}>
+//       <View style={styles.marker} />
+//     </View>
+//   </MapView.Marker>
+//     {/* restrooms */}
+
+// </MapView>
+
+// :
+// <MapView
+// style={styles.map}
+// initialRegion={{
+//   latitude: 40.704958,
+//   longitude:  -74.009139,
+//   latitudeDelta: 0.0922,
+//   longitudeDelta: 0.0421
+// }}
+// >
+// <MapView.Marker
+//   coordinate={{
+//     latitude: 40.704958,
+//     longitude:  -74.009139
+//   }}
+// >
+//   <View style={styles.radius}>
+//     <View style={styles.marker} />
+//   </View>
+// </MapView.Marker>
+//   {/* restrooms */}
+
+//   {
+//     allRestrooms.map((restroom)=>{
+//       return(
+//         <MapView.Marker
+//         key={restroom.id}
+//         coordinate={{
+//           latitude: restroom.coordinates.latitude,
+//           longitude:  restroom.coordinates.longitude
+//         }}
+//         >
+//         </MapView.Marker>
+//       )
+//     })
+//   }
+// </MapView>
+
+
+// }

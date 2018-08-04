@@ -5,7 +5,8 @@ import {
   ADD_NEW_USER,
   ADD_RESTROOM,
   EDIT_RESTROOM,
-  GET_USER
+  GET_USER,
+  GOT_RESTROOM
 } from "./actionsType";
 
 const newUserReducer = (state = {}, action) => {
@@ -19,20 +20,25 @@ const newUserReducer = (state = {}, action) => {
   }
 };
 
-const restroomReducer = (state = {}, action) => {
+const restroomReducer = (state = [], action) => {
   switch (action.type) {
-    case ADD_RESTROOM:
-      return action.payload;
-    case EDIT_RESTROOM:
-      return action.payload;
+    case GOT_RESTROOM:
+    return action.payload
+    // case ADD_RESTROOM:
+    //   return action.payload;
+    // case EDIT_RESTROOM:
+    //   return action.payload;
     default:
       return state;
   }
 };
 
+
+
 const rootReducer = combineReducers({
   newUser: newUserReducer,
   restroom: restroomReducer
 });
+
 
 export default rootReducer;
