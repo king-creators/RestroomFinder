@@ -7,13 +7,26 @@ import { TabNavigator } from "react-navigation";
 //custom components imports
 import CustomHeader from "./CustomHeader";
 import HomeView from "./HomeView";
-import ListResults from "./ListResults";
+import ListResults from "./Results/ListResults";
 import MapView from "react-native-maps";
 
 class Go extends Component {
+  static navigationOptions = ({ navigation }) => ({
+    title: "Nearest You",
+    drawerIcon: () => <Ionicons name="md-home" size={24} />
+    // (
+    // <Image
+    //   source="https://png.icons8.com/metro/1600/settings.png"
+    //   style={[styles.icon]}
+    // />
+    //   <ion-icon ios="ios-log-in" md="md-log-in" />
+
+    // )
+  });
   render() {
     return (
       <Container>
+        <CustomHeader title="Nearest You" />
         <Content
           contentContainerStyle={{
             flex: 1,
