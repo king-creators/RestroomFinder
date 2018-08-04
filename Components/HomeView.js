@@ -48,6 +48,7 @@ class HomeView extends Component {
   }
   
   componentDidMount(){
+    this.props.getRestroom()
     navigator.geolocation.getCurrentPosition(
       (position)=> {
         let lat = parseFloat(position.coords.latitude)
@@ -85,6 +86,7 @@ class HomeView extends Component {
 
 
   render() {
+    console.log(this.props.restroom)
   const allRestrooms = (this.props.restroom)
   console.log(allRestrooms)
     return (
@@ -113,12 +115,6 @@ class HomeView extends Component {
           </MapView>
         </Content>
       </Container>
-
-    //   <View style={{ flexGrow: 1, alignItems: 'center', justifyContent: 'center' }}>
-    //   <Text>Latitude: {this.state.latitude}</Text>
-    //   <Text>Longitude: {this.state.longitude}</Text>
-    //   {this.state.error ? <Text>Error: {this.state.error}</Text> : null}
-    // </View>
     );
   }
 }
