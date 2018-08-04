@@ -2,27 +2,24 @@ import React, { Component } from "react";
 import { View, Text, StyleSheet, Image } from "react-native";
 import { Container, Content, Icon, Button } from "native-base";
 import CustomHeader from "../CustomHeader";
+import Ionicons from "react-native-vector-icons/Ionicons";
 
 class Login extends Component {
   constructor(props) {
     super(props);
   }
-  // static navigationOptions = ({ navigation }) => ({
-  //   title: "Login",
-  //   headerLeft: (
-  //     // <Icon
-  //     //   name="ios-menu"
-  //     //   style={{ paddingLeft: 10 }}
-  //     //   onPress={() => navigation.navigate("DrawerOpen")}
-  //     // />
-  //   ),
-  //   drawerIcon: (
-  //     <Image
-  //       source="https://png.icons8.com/metro/1600/settings.png"
-  //       style={[styles.icon]}
-  //     />
-  //   )
-  // });
+  static navigationOptions = ({ navigation }) => ({
+    title: "Login",
+    drawerIcon: () => <Ionicons name="md-log-in" size={24} />
+    // (
+    // <Image
+    //   source="https://png.icons8.com/metro/1600/settings.png"
+    //   style={[styles.icon]}
+    // />
+    //   <ion-icon ios="ios-log-in" md="md-log-in" />
+
+    // )
+  });
 
   render() {
     return (

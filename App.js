@@ -9,6 +9,7 @@ import { createDrawerNavigator, DrawerItems } from "react-navigation";
 import Home from "./Components/Home";
 import SignUp from "./Components/Forms/SignUp";
 import Login from "./Components/Forms/Login";
+import Restroom from "./Components/Results/Restroom";
 
 export default class App extends Component {
   render() {
@@ -22,7 +23,7 @@ const CustomDrawerContentComponent = props => (
       <Body>
         <Image
           style={styles.drawerImage}
-          source="https://png.icons8.com/metro/1600/settings.png"
+          source={require("./Components/_assets/logo.png")}
         />
       </Body>
     </Header>
@@ -31,6 +32,12 @@ const CustomDrawerContentComponent = props => (
     </Content>
   </Container>
 );
+
+class Hidden extends React.Component {
+  render() {
+    return null;
+  }
+}
 
 const MyApp = createDrawerNavigator(
   {
@@ -43,6 +50,12 @@ const MyApp = createDrawerNavigator(
     },
     SignUp: {
       screen: SignUp
+    },
+    Restroom: {
+      screen: Restroom,
+      navigationOptions: {
+        drawerLabel: <Hidden />
+      }
     }
   },
 
@@ -58,17 +71,16 @@ const MyApp = createDrawerNavigator(
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center"
+    flex: 1
+    // justifyContent: "center",
+    // alignItems: "center"
   },
   drawerHeader: {
     height: 200,
     backgroundColor: "white"
   },
   drawerImage: {
-    height: 150,
-    width: 150,
-    borderRadius: 75
+    height: 80,
+    width: 212
   }
 });

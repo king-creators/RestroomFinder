@@ -14,15 +14,25 @@ import {
   Title
 } from "native-base";
 //custom components imports
-import CustomHeader from "./CustomHeader";
 import MapView from "react-native-maps";
-import Ionicons from "react-native-vector-icons/Ionicons";
-import Hamburger from "react-native-hamburger";
-
+import CustomHeader from "./CustomHeader";
 class HomeView extends Component {
+  static navigationOptions = ({ navigation }) => ({
+    title: "Home",
+    drawerIcon: () => <Ionicons name="md-home" size={24} />
+    // (
+    // <Image
+    //   source="https://png.icons8.com/metro/1600/settings.png"
+    //   style={[styles.icon]}
+    // />
+    //   <ion-icon ios="ios-log-in" md="md-log-in" />
+
+    // )
+  });
   render() {
     return (
       <Container>
+        <CustomHeader title="Home" />
         <Content
           contentContainerStyle={{
             flex: 1,

@@ -13,7 +13,7 @@ import { Container, Content, Icon } from "native-base";
 import CustomHeader from "../CustomHeader";
 import { createBottomTabNavigator } from "react-navigation";
 import HomeView from "../HomeView";
-import ListResults from "../ListResults";
+import ListResults from "../Results/ListResults";
 import Go from "../Go";
 import Ionicons from "react-native-vector-icons/Ionicons";
 
@@ -32,6 +32,18 @@ class SignUp extends Component {
     console.log(this.state);
     // this.props.addUser(this.state);
   }
+  static navigationOptions = ({ navigation }) => ({
+    title: "SignUp",
+    drawerIcon: () => <Ionicons name="md-create" size={24} />
+    // (
+    // <Image
+    //   source="https://png.icons8.com/metro/1600/settings.png"
+    //   style={[styles.icon]}
+    // />
+    //   <ion-icon ios="ios-log-in" md="md-log-in" />
+
+    // )
+  });
   render() {
     return (
       <Container>
