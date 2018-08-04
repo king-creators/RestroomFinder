@@ -16,6 +16,7 @@ import Store from './store/store'
 
 
 export default class App extends Component {
+
   render() {
     return (
       <Provider store={Store}>

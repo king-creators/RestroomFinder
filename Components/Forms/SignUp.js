@@ -6,7 +6,7 @@ import {
   FormValidationMessage,
   Button
 } from "react-native-elements";
-import { addUser } from "../../store/thunks";
+// import { addUser } from "../../store/thunks";
 import { connect } from "react-redux";
 import { createStackNavigator } from "react-navigation";
 import { Container, Content, Icon } from "native-base";

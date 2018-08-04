@@ -1,42 +1,7 @@
 import { combineReducers } from "redux";
-
-// add new user
-import {
-  ADD_NEW_USER,
-  ADD_RESTROOM,
-  EDIT_RESTROOM,
-  GET_USER,
-  GOT_RESTROOM
-} from "./actionsType";
-
-const newUserReducer = (state = {}, action) => {
-  switch (action.type) {
-    case ADD_NEW_USER:
-      return action.payload;
-    case GET_USER:
-      return action.user;
-    default:
-      return state;
-  }
-};
-
-const restroomReducer = (state = [], action) => {
-  switch (action.type) {
-    case GOT_RESTROOM:
-    return action.payload
-    // case ADD_RESTROOM:
-    //   return action.payload;
-    // case EDIT_RESTROOM:
-    //   return action.payload;
-    default:
-      return state;
-  }
-};
-
-
+import restroomReducer from './Restrooms'
 
 const rootReducer = combineReducers({
-  newUser: newUserReducer,
   restroom: restroomReducer
 });
 
