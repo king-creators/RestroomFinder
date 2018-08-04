@@ -23,9 +23,39 @@ import {
 import { withNavigation } from "react-navigation";
 import StarRating from "../StarRatings/StarRatings";
 // import SubNav from "../Restroom";
+import getDirections from "react-native-google-maps-directions";
 
 class ListCard extends Component {
+  constructor() {
+    super();
+    this.handleGetDirections = this.handleGetDirections.bind(this);
+  }
+  handleGetDirections = () => {
+    const data = {
+      source: {
+        latitude: 40.704941,
+        longitude: -74.008943
+      },
+      destination: {
+        latitude: 40.703673,
+        longitude: -74.010738
+      },
+      params: [
+        {
+          key: "travelmode",
+          value: "driving" // may be "walking", "bicycling" or "transit" as well
+        },
+        {
+          key: "dir_action",
+          value: "navigate" // this instantly initializes navigation using the given travel mode
+        }
+      ]
+    };
+
+    getDirections(data);
+  };
   render() {
+    const { history } = this.props;
     const ratingObj = {
       ratings: 4,
       views: 100
@@ -34,23 +64,44 @@ class ListCard extends Component {
       <React.Fragment>
         <View style={styles.container}>
           <Card style={styles.content} containerViewStyle={{ width: "100%" }}>
-            <Right>
-              <StarRating ratingObj={ratingObj} />
-            </Right>
-            <CardButton
-              onPress={() => history.push("/Restroom")}
-              title="Name of Restaurant"
-              color="#FEB557"
+            <CardAction separator={false} inColumn={false}>
+              <CardButton
+                style={styles.top}
+                onPress={() => history.push("/Restroom")}
+                title="Name of Restaurant"
+                color="#FEB557"
+              />
+
+              <Right>
+                <StarRating ratingObj={ratingObj} />
+              </Right>
+            </CardAction>
+
+            <CardContent styles={styles.bottom} text="123 Main St." />
+            <CardContent
+              styles={styles.bottom}
+              text="Average Wait Time: 10 minutes"
             />
-            <CardTitle subtitle="123 Main St." />
-            <CardContent text="0.5 miles" />
 
-            {/* <CardAction separator={true} inColumn={false}> */}
-            <CardButton onPress={() => {}} title="Directions" color="#FEB557" />
+            <CardAction separator={false} inColumn={false}>
+              {/* <CardAction separator={true} inColumn={false}> */}
+              {/* <CardButton
+                onPress={() => {}}
+                title="Directions"
+                color="#FEB557"
+              /> */}
 
+              <CardButton
+                onPress={this.handleGetDirections}
+                title="Get Directions"
+              />
+
+              <Right style={styles.right}>
+                <Text>0.5 miles</Text>
+              </Right>
+            </CardAction>
             {/* </CardAction> */}
           </Card>
-          {/* <SubNav /> */}
         </View>
       </React.Fragment>
     );
@@ -64,6 +115,18 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center"
     // backgroundColor: "#ecf0f1"
+  },
+  right: {
+    marginRight: 10
+  },
+  top: {
+    marginTop: 10
+  },
+  bottom: {
+    marginBottom: 0,
+    paddingBottom: 0,
+    marginTop: 0,
+    paddingTop: 0
   }
   //   content: {
   //     // flex: 1,

@@ -3,32 +3,32 @@ import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
 
 //library imports
 import { Icon, Button, Container, Header, Content, Left } from "native-base";
-import { createBottomTabNavigator } from "react-navigation";
+import { createBottomTabNavigator, withNavigation } from "react-navigation";
 //custom components imports
 import CustomHeader from "./CustomHeader";
 import HomeView from "./HomeView";
-import Results from "./Results/";
+import ListView from "./ListView";
 import MapView from "react-native-maps";
 import Go from "./Go";
 import Ionicons from "react-native-vector-icons/Ionicons";
 
 class Home extends Component {
-  // static navigationOptions = ({ navigation }) => ({
-  //   title: "Home",
-  //   drawerIcon: () => <Ionicons name="md-home" size={24} />
-  //   // (
-  //   // <Image
-  //   //   source="https://png.icons8.com/metro/1600/settings.png"
-  //   //   style={[styles.icon]}
-  //   // />
-  //   //   <ion-icon ios="ios-log-in" md="md-log-in" />
+  static navigationOptions = ({ navigation }) => ({
+    title: "Home",
+    drawerIcon: () => <Ionicons name="md-home" size={24} />
+    // (
+    // <Image
+    //   source="https://png.icons8.com/metro/1600/settings.png"
+    //   style={[styles.icon]}
+    // />
+    //   <ion-icon ios="ios-log-in" md="md-log-in" />
 
-  //   // )
-  // });
+    // )
+  });
+
   render() {
     return (
       <React.Fragment>
-        {/* <CustomHeader title="Home" /> */}
         <HomeScreenTabNavigator
           screenProps={{ navigation: this.props.navigation }}
         />
@@ -37,7 +37,7 @@ class Home extends Component {
   }
 }
 
-export default Home;
+export default withNavigation(Home);
 
 const HomeScreenTabNavigator = new createBottomTabNavigator({
   Home: {
@@ -48,7 +48,7 @@ const HomeScreenTabNavigator = new createBottomTabNavigator({
     }
   },
   ListResults: {
-    screen: Results,
+    screen: ListView,
     navigationOptions: {
       tabBarLabel: "View List",
       tabBarIcon: () => <Ionicons name="md-list" size={24} />

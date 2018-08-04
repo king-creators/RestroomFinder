@@ -1,5 +1,12 @@
 import React, { Component } from "react";
-import { View, Text, StyleSheet, Image, TouchableOpacity, Dimensions } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  Image,
+  TouchableOpacity,
+  Dimensions
+} from "react-native";
 
 //library imports
 import {
@@ -18,6 +25,7 @@ import CustomHeader from "./CustomHeader";
 import MapView from "react-native-maps";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import Hamburger from "react-native-hamburger";
+import { withNavigation, DrawerActions } from "react-navigation";
 //--------------------------------------------------------------------
 import {connect} from 'react-redux'
 import {getRestroom, Loading} from '../store/Restrooms'
@@ -30,10 +38,10 @@ const LATTITUDE_DELTA = 0.0922
 const LONGTITUDE_DELTA = LATTITUDE_DELTA * ASPECT_RATION 
 
 class HomeView extends Component {
-  constructor(props){
-    super(props)
-    this.state ={
-      initialPostion : {
+  constructor(props) {
+    super(props);
+    this.state = {
+      initialPostion: {
         latitude: 0,
         longitude: 0,
         latitudeDelta: 0,
@@ -51,9 +59,9 @@ class HomeView extends Component {
   componentDidMount(){
     this.props.Loading()
     navigator.geolocation.getCurrentPosition(
-      (position)=> {
-        let lat = parseFloat(position.coords.latitude)
-        let long = parseFloat(position.coords.longitude)
+      position => {
+        let lat = parseFloat(position.coords.latitude);
+        let long = parseFloat(position.coords.longitude);
 
         this.props.getRestroom({
           latitude: lat,
@@ -64,17 +72,22 @@ class HomeView extends Component {
           latitude: lat,
           longitude: long,
           latitudeDelta: LATTITUDE_DELTA,
-          longitudeDelta: LONGTITUDE_DELTA,
-        }
-        this.setState({initialPostion: initalRegion})
-        this.setState({markerPosition: initalRegion})
-
-      },(error)=> this.setState({error: error.message}),
-      {enableHighAccuracy: true, timeout:2000, maximumAge: 1000, distanceFilter : 10}
+          longitudeDelta: LONGTITUDE_DELTA
+        };
+        this.setState({ initialPostion: initalRegion });
+        this.setState({ markerPosition: initalRegion });
+      },
+      error => this.setState({ error: error.message }),
+      {
+        enableHighAccuracy: true,
+        timeout: 2000,
+        maximumAge: 1000,
+        distanceFilter: 10
+      }
     );
-    this.watchId = navigator.geolocation.watchPosition((position)=>{
-      let lat = parseFloat(position.coords.latitude)
-      let long = parseFloat(position.coords.longitude)
+    this.watchId = navigator.geolocation.watchPosition(position => {
+      let lat = parseFloat(position.coords.latitude);
+      let long = parseFloat(position.coords.longitude);
       let lastRegion = {
         latitude: lat,
         longitude: long, 
@@ -89,8 +102,9 @@ class HomeView extends Component {
   componentWillUnmount(){
     navigator.geolocation.clearWatch(this.watchId)
   }
-
-
+  toggleDrawer = () => {
+    this.props.screenProps.navigation.dispatch(DrawerActions.toggleDrawer());
+  };
   render() {
     const isLoading = this.props.isLoading
     console.log('isLoading: ', isLoading);
@@ -159,7 +173,7 @@ class HomeView extends Component {
   }
 }
 
-const MapDispatchToProps = (dispatch) => {
+const MapDispatchToProps = dispatch => {
   return {
     getRestroom : (userLocation)=> dispatch(getRestroom(userLocation)),
     Loading : ()=> dispatch(Loading())
@@ -174,7 +188,10 @@ const MapStateToProps = state => {
   }
 }
 
-export default connect(MapStateToProps ,MapDispatchToProps)(HomeView)
+export default connect(
+  MapStateToProps,
+  MapDispatchToProps
+)(HomeView);
 
 const styles = StyleSheet.create({
   icon: {
@@ -209,13 +226,7 @@ const styles = StyleSheet.create({
   }
 });
 
-
-
-
-
-
-
-// {allRestrooms.length < 1 ? 
+// {allRestrooms.length < 1 ?
 //   <MapView
 //   style={styles.map}
 //   initialRegion={{
@@ -276,6 +287,5 @@ const styles = StyleSheet.create({
 //     })
 //   }
 // </MapView>
-
 
 // }

@@ -21,30 +21,42 @@ import Restroom from "./Restroom";
 
 const history = createHistory();
 
-const Results = () => (
-  <Router history={history}>
-    <View style={{ flex: 1 }}>
-      <Switch>
-        <Route exact path="/" component={ListResults} />
-        <Route path="/">
-          <Container>
-            <Header>
-              <Left>
-                <Icon onPress={() => history.goBack()} name="arrow-back" />
-              </Left>
-              <Body>
-                <Title>Details</Title>
-              </Body>
-              <Right />
-            </Header>
-            <Switch>
-              <Route exact path="/Restroom" component={Restroom} />
-            </Switch>
-          </Container>
-        </Route>
-      </Switch>
-    </View>
-  </Router>
-);
+const Results = props => {
+  console.log(props);
+  return (
+    <Router history={history}>
+      <View style={{ flex: 1 }}>
+        <Switch>
+          <Route
+            exact
+            path="/"
+            // component={ListResults}
+            // toggleDrawer={props.toggleDrawer}
+            render={() => (
+              <ListResults
+                toggleDrawer={props.toggleDrawer}
+                history={history}
+              />
+            )}
+          />
+          <Route path="/">
+            <Container>
+              <Switch>
+                <Route
+                  exact
+                  path="/Restroom"
+                  component={Restroom}
+
+                  // toggleDrawer={props.toggleDrawer}
+                  // render={() => <Restroom toggleDrawer={props.toggleDrawer/>} />}
+                />
+              </Switch>
+            </Container>
+          </Route>
+        </Switch>
+      </View>
+    </Router>
+  );
+};
 
 export default Results;

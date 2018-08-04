@@ -13,10 +13,13 @@ class CustomHeader extends Component {
     this.props.navigation.dispatch(DrawerActions.toggleDrawer());
   };
   render() {
+    const toggleDrawer = this.props.toggleDrawer
+      ? this.props.toggleDrawer
+      : this.toggleDrawer;
     return (
       <Header>
         <Left>
-          <Icon name="ios-menu" onPress={() => this.toggleDrawer()} />
+          <Icon name="ios-menu" onPress={toggleDrawer} />
         </Left>
         <Body>
           <Title>{this.props.title}</Title>
