@@ -11,9 +11,8 @@ import SignUp from "./Components/Forms/SignUp";
 import Login from "./Components/Forms/Login";
 import Restroom from "./Components/Results/Restroom";
 //Store
-import {Provider} from 'react-redux'
-import Store from './store/store'
-
+import { Provider } from "react-redux";
+import Store from "./store/store";
 
 export default class App extends Component {
   render() {
@@ -21,10 +20,9 @@ export default class App extends Component {
       <Provider store={Store}>
         <MyApp />
       </Provider>
-  )
+    );
   }
 }
-
 
 const CustomDrawerContentComponent = props => (
   <Container>
@@ -59,12 +57,6 @@ const MyApp = createDrawerNavigator(
     },
     SignUp: {
       screen: SignUp
-    },
-    Restroom: {
-      screen: Restroom,
-      navigationOptions: {
-        drawerLabel: <Hidden />
-      }
     }
   },
 

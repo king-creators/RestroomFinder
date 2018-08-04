@@ -1,5 +1,12 @@
 import React, { Component } from "react";
-import { View, Text, StyleSheet, Image, TouchableOpacity, Dimensions } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  Image,
+  TouchableOpacity,
+  Dimensions
+} from "react-native";
 
 //library imports
 import {
@@ -18,22 +25,23 @@ import CustomHeader from "./CustomHeader";
 import MapView from "react-native-maps";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import Hamburger from "react-native-hamburger";
+import { withNavigation, DrawerActions } from "react-navigation";
 //--------------------------------------------------------------------
-import {connect} from 'react-redux'
-import {getRestroom} from '../store/thunks'
+import { connect } from "react-redux";
+import { getRestroom } from "../store/thunks";
 //--------------------------------------------------------------------
-const {width,height } = Dimensions.get('window')
-const SCREEN_HEIGHT = height
-const SCREEN_WIDTH = width
-const ASPECT_RATION = SCREEN_WIDTH / SCREEN_HEIGHT
-const LATTITUDE_DELTA = 0.0922
-const LONGTITUDE_DELTA = LATTITUDE_DELTA * ASPECT_RATION
+const { width, height } = Dimensions.get("window");
+const SCREEN_HEIGHT = height;
+const SCREEN_WIDTH = width;
+const ASPECT_RATION = SCREEN_WIDTH / SCREEN_HEIGHT;
+const LATTITUDE_DELTA = 0.0922;
+const LONGTITUDE_DELTA = LATTITUDE_DELTA * ASPECT_RATION;
 
 class HomeView extends Component {
-  constructor(props){
-    super(props)
-    this.state ={
-      initialPostion : {
+  constructor(props) {
+    super(props);
+    this.state = {
+      initialPostion: {
         latitude: 0,
         longitude: 0,
         latitudeDelta: 0,
@@ -44,94 +52,115 @@ class HomeView extends Component {
         latitude: 0,
         longitude: 0
       }
-    }
+    };
+    this.toggleDrawer = this.toggleDrawer.bind(this);
   }
-  
-  componentDidMount(){
-    this.props.getRestroom()
+
+  componentDidMount() {
+    this.props.getRestroom();
     navigator.geolocation.getCurrentPosition(
-      (position)=> {
-        let lat = parseFloat(position.coords.latitude)
-        let long = parseFloat(position.coords.longitude)
+      position => {
+        let lat = parseFloat(position.coords.latitude);
+        let long = parseFloat(position.coords.longitude);
 
         const initalRegion = {
           latitude: lat,
           longitude: long,
           latitudeDelta: LATTITUDE_DELTA,
-          longitudeDelta: LONGTITUDE_DELTA,
-        }
-        this.setState({initialPostion: initalRegion})
-        this.setState({markerPosition: initalRegion})
-
-      },(error)=> this.setState({error: error.message}),
-      {enableHighAccuracy: true, timeout:2000, maximumAge: 1000, distanceFilter : 10}
+          longitudeDelta: LONGTITUDE_DELTA
+        };
+        this.setState({ initialPostion: initalRegion });
+        this.setState({ markerPosition: initalRegion });
+      },
+      error => this.setState({ error: error.message }),
+      {
+        enableHighAccuracy: true,
+        timeout: 2000,
+        maximumAge: 1000,
+        distanceFilter: 10
+      }
     );
-    this.watchId = navigator.geolocation.watchPosition((position)=>{
-      let lat = parseFloat(position.coords.latitude)
-      let long = parseFloat(position.coords.longitude)
+    this.watchId = navigator.geolocation.watchPosition(position => {
+      let lat = parseFloat(position.coords.latitude);
+      let long = parseFloat(position.coords.longitude);
       let lastRegion = {
         latitude: lat,
         longitude: long,
         latitudeDelta: LATTITUDE_DELTA,
-        longitudeDelta: LONGTITUDE_DELTA,
-      }
-      this.setState({initialPostion: lastRegion})
-      this.setState({markerPosition: lastRegion})
-    })
+        longitudeDelta: LONGTITUDE_DELTA
+      };
+      this.setState({ initialPostion: lastRegion });
+      this.setState({ markerPosition: lastRegion });
+    });
   }
 
-  componentWillUnmount(){
-    navigator.geolocation.clearWatch(this.watchId)
+  componentWillUnmount() {
+    navigator.geolocation.clearWatch(this.watchId);
   }
-
-
+  toggleDrawer = () => {
+    this.props.screenProps.navigation.dispatch(DrawerActions.toggleDrawer());
+  };
   render() {
-    console.log(this.props.restroom)
-  const allRestrooms = (this.props.restroom)
-  console.log(allRestrooms)
+    // console.log(this.props.restroom);
+    const allRestrooms = this.props.restroom;
+    // console.log(this.props);
+    // console.log(allRestrooms);
     return (
-      <Container>
-        <Content
-          contentContainerStyle={{
-            flex: 1,
-            alignItems: "center",
-            justifyContent: "center",
-            padding: 10
-          }}
-        >
-            <MapView
-            style={styles.map}
-            region={this.state.initialPostion}
+      <React.Fragment>
+        <Container>
+          <CustomHeader title="Home" toggleDrawer={this.toggleDrawer} />
+          {/* <Header>
+            <Left>
+              <Icon name="ios-menu" onPress={() => this.toggleDrawer()} />
+              {/* <Icon name="ios-menu" onPress={() => this.toggleDrawer()} /> */}
+          {/* </Left>
+            <Body>
+              <Title>Home</Title>
+            </Body>
+            <Right />
+          </Header> */}{" "}
+          */}
+          <Content
+            contentContainerStyle={{
+              flex: 1,
+              alignItems: "center",
+              justifyContent: "center",
+              padding: 10
+            }}
           >
-            <MapView.Marker
-              coordinate={this.state.markerPosition}
-            >
-              <View style={styles.radius}>
-                <View style={styles.marker} />
-              </View>
-            </MapView.Marker>
+            <MapView style={styles.map} region={this.state.initialPostion}>
+              <MapView.Marker coordinate={this.state.markerPosition}>
+                <View style={styles.radius}>
+                  <View style={styles.marker} />
+                </View>
+              </MapView.Marker>
               {/* restrooms */}
-
-          </MapView>
-        </Content>
-      </Container>
+            </MapView>
+          </Content>
+        </Container>
+      </React.Fragment>
     );
   }
 }
 
-const MapDispatchToProps = (dispatch) => {
+const MapDispatchToProps = dispatch => {
   return {
-    getRestroom : ()=> dispatch(getRestroom()) 
-  }
-}
+    getRestroom: () => dispatch(getRestroom())
+  };
+};
 
 const MapStateToProps = state => {
   return {
-    restroom : state.restroom
-  }
-}
+    restroom: state.restroom
+  };
+};
 
-export default connect(MapStateToProps ,MapDispatchToProps)(HomeView)
+const newHome = withNavigation(HomeView);
+
+export default connect(
+  MapStateToProps,
+  MapDispatchToProps
+)(newHome);
 
 const styles = StyleSheet.create({
   icon: {
@@ -166,13 +195,7 @@ const styles = StyleSheet.create({
   }
 });
 
-
-
-
-
-
-
-// {allRestrooms.length < 1 ? 
+// {allRestrooms.length < 1 ?
 //   <MapView
 //   style={styles.map}
 //   initialRegion={{
@@ -233,6 +256,5 @@ const styles = StyleSheet.create({
 //     })
 //   }
 // </MapView>
-
 
 // }
