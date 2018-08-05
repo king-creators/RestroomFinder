@@ -54,47 +54,68 @@ class ListCard extends Component {
 
     getDirections(data);
   };
-    getMiles(i) {
-    return (i*0.000621371192).toFixed(2);
-}
-  
+  getMiles(i) {
+    return (i * 0.000621371192).toFixed(2);
+  }
+
   render() {
-  
     const { history, restroom } = this.props;
     const ratingObj = {
       ratings: restroom.rating,
       views: restroom.review_count
     };
-    
+
     return (
       <React.Fragment>
         <View style={styles.container}>
           <Card style={styles.content} containerViewStyle={{ width: "100%" }}>
-            <CardAction separator={false} inColumn={false}>
+            <CardAction
+              separator={false}
+              inColumn={false}
+              style={{ backgroundColor: "#FEB557", marginBottom: 10 }}
+            >
               <CardButton
                 style={styles.top}
-                onPress={() => history.push({
-                  pathname: "/Restroom",
-                  state : this.props.restroom
-                    
-                
-                })}
+                onPress={() =>
+                  history.push({
+                    pathname: "/Restroom",
+                    state: this.props.restroom
+                  })
+                }
                 title={restroom.name}
-                color="#FEB557"
+                color="white"
               />
 
               <Right>
-                <StarRating ratingObj={ratingObj} />
+                <Icon
+                  style={{ color: "white", marginRight: 15 }}
+                  name="arrow-dropright"
+                  onPress={() =>
+                    history.push({
+                      pathname: "/Restroom",
+                      state: this.props.restroom
+                    })
+                  }
+                />
               </Right>
+
+              {/* <Right>
+                <StarRating ratingObj={ratingObj} />
+              </Right> */}
             </CardAction>
 
-            <CardContent styles={styles.bottom} text={restroom.location.address1} />
+            <CardContent
+              styles={styles.bottom}
+              text={restroom.location.address1}
+            />
             <CardContent
               styles={styles.bottom}
               text="Average Wait Time: 10 minutes"
             />
-
-            <CardAction separator={false} inColumn={false}>
+            <Text style={{ marginLeft: 15, marginBottom: 20 }}>
+              <StarRating ratingObj={ratingObj} />
+            </Text>
+            <CardAction separator={true} inColumn={false}>
               {/* <CardAction separator={true} inColumn={false}> */}
               {/* <CardButton
                 onPress={() => {}}
@@ -106,7 +127,11 @@ class ListCard extends Component {
                 onPress={this.handleGetDirections}
                 title="Get Directions"
               />
-
+              <Icon
+                style={{ marginleft: 15, fontSize: 20, color: "#FEB557" }}
+                name="md-arrow-dropright"
+                onPress={this.handleGetDirections}
+              />
               <Right style={styles.right}>
                 <Text>{this.getMiles(restroom.distance)} miles</Text>
               </Right>

@@ -37,14 +37,15 @@ class Restroom extends Component {
       ratings: this.props.location.state.rating,
       views: 100
     };
-    const restroom = this.props.location.state
+    const restroom = this.props.location.state;
     return (
       <ScrollView>
         <Header>
           <Left>
             <Icon
-              onPress={() => this.props.history.goBack()}
+              style={{ fontSize: 50 }}
               name="arrow-back"
+              onPress={() => this.props.history.goBack()}
             />
           </Left>
           <Body>
@@ -61,7 +62,7 @@ class Restroom extends Component {
         />
 
         <Text style={styles.title}>{restroom.name}</Text>
-        <Text style={styles.text}>{restroom.location.address1}  </Text>
+        <Text style={styles.text}>{restroom.location.address1} </Text>
         <TouchableOpacity
           onPress={() => Communications.phonecall(restroom.phone, true)}
         >

@@ -7,7 +7,6 @@ import {
   Button
 } from "react-native-elements";
 
-
 import { connect } from "react-redux";
 import { createStackNavigator } from "react-navigation";
 import { Container, Content, Icon } from "native-base";
@@ -34,7 +33,7 @@ class SignUp extends Component {
     // this.props.addUser(this.state);
   }
   static navigationOptions = ({ navigation }) => ({
-    title: "SignUp",
+    title: "Sign Up",
     drawerIcon: () => <Ionicons name="md-create" size={24} />
     // (
     // <Image
@@ -52,12 +51,10 @@ class SignUp extends Component {
         <Content
           contentContainerStyle={{
             flex: 1,
-            alignItems: "center",
-            justifyContent: "center",
-            padding: 10
+            justifyContent: "center"
           }}
         >
-          <View>
+          <View style={{ padding: 20 }}>
             <FormLabel>First Name</FormLabel>
             <FormInput
               onChangeText={text => this.setState({ firstName: text })}
@@ -79,6 +76,7 @@ class SignUp extends Component {
               name="password"
             />
             <Button
+              style={{ marginTop: 40 }}
               onPress={() => {
                 this.onSubmit();
               }}

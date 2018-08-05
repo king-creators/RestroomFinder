@@ -1,15 +1,30 @@
 import React, { Component } from "react";
 import { View, Text, StyleSheet, Image } from "react-native";
-import { Container, Content, Icon, Button } from "native-base";
+import { Container, Content, Icon } from "native-base";
 import CustomHeader from "../CustomHeader";
 import Ionicons from "react-native-vector-icons/Ionicons";
+import {
+  FormLabel,
+  FormInput,
+  FormValidationMessage,
+  Button
+} from "react-native-elements";
 
 class Login extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      password: "",
+      email: ""
+    };
+    this.onSubmit = this.onSubmit.bind(this);
+  }
+  onSubmit() {
+    console.log(this.state);
+    // this.props.addUser(this.state);
   }
   static navigationOptions = ({ navigation }) => ({
-    title: "Login",
+    title: "Log In",
     drawerIcon: () => <Ionicons name="md-log-in" size={24} />
     // (
     // <Image
@@ -24,18 +39,32 @@ class Login extends Component {
   render() {
     return (
       <Container>
-        <CustomHeader title="Login" />
+        <CustomHeader title="Log in" />
         <Content
           contentContainerStyle={{
             flex: 1,
-            alignItems: "center",
-            justifyContent: "center",
-            padding: 10
+            justifyContent: "center"
           }}
         >
-          <Button full onPress={() => this.props.navigation.navigate("Home")}>
-            <Text style={{ color: "white" }}>Go to Home screen</Text>
-          </Button>
+          <View>
+            <FormLabel>Email</FormLabel>
+            <FormInput
+              onChangeText={text => this.setState({ email: text })}
+              name="email"
+            />
+            <FormLabel>Password</FormLabel>
+            <FormInput
+              onChangeText={text => this.setState({ password: text })}
+              name="password"
+            />
+            <Button
+              style={styles.margin}
+              onPress={() => {
+                this.onSubmit();
+              }}
+              title="Submit"
+            />
+          </View>
         </Content>
       </Container>
     );
@@ -48,5 +77,8 @@ const styles = StyleSheet.create({
   icon: {
     height: 24,
     width: 24
+  },
+  margin: {
+    marginTop: 40
   }
 });
