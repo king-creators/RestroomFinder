@@ -161,7 +161,7 @@ class HomeView extends Component {
                             " " +
                             restroom.location.state +
                             " " +
-                            restroom.location.zipCode
+                            restroom.location.zip_code
                           }
                           image={require("./_assets/toilet-paper.png")}
                         />

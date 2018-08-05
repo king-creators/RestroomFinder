@@ -18,6 +18,7 @@ import {
 } from "./actionsType";
 const LOADING = "LOADING";
 const USER_LOCATION = "USER_LOCATION";
+const WAIT_TIME = "WAIT_TIME";
 
 // //----------------------------------------------------------------
 // //Actions creators
@@ -25,10 +26,20 @@ const USER_LOCATION = "USER_LOCATION";
 const gotRestrooms = payload => ({ type: GOT_RESTROOM, payload });
 const loading = () => ({ type: LOADING });
 const userLocationAction = payload => ({ type: USER_LOCATION, payload });
+const waitTime = payload => ({ type: WAIT_TIME, payload });
 
 // //----------------------------------------------------------------
 // //Thunks
 // //----------------------------------------------------------------
+
+export const getWaitTime = yelpId => async dispatch => {
+  try {
+    const result = await axios.post(`${path}/restroom/waitTime/${yelpId}`);
+    dispatch(waitTime(result.data));
+  } catch (error) {
+    console.error(error);
+  }
+};
 
 export const getRestroom = userLocation => async dispatch => {
   try {
