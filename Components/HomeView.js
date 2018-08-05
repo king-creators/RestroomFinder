@@ -158,7 +158,7 @@ class HomeView extends Component {
                     <View style={styles.radius}> 
                       <View style={styles.marker} />
                     </View>
-                  </MapView.Marker>
+                  </MapView.Marker> 
                     {/* restrooms */}
                     {
                       allRestrooms.length < 1 ? null : allRestrooms.map((restroom)=>{
