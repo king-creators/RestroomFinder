@@ -2,13 +2,12 @@ import React, { Component } from "react";
 import { View, Text, StyleSheet, Image } from "react-native";
 
 //library imports
-import { Icon, Button, Container, Header, Content, Left } from "native-base";
-import { TabNavigator } from "react-navigation";
+import { Icon, Container, Header, Content, Left } from "native-base";
 //custom components imports
 import CustomHeader from "./CustomHeader";
-import HomeView from "./HomeView";
-import ListResults from "./Results/ListResults";
-import MapView from "react-native-maps";
+import Button from "react-native-button";
+import getDirections from "react-native-google-maps-directions";
+import { connect } from "react-redux";
 
 class Go extends Component {
   static navigationOptions = ({ navigation }) => ({
@@ -23,6 +22,30 @@ class Go extends Component {
 
     // )
   });
+  handleGetDirections = () => {
+    const data = {
+      source: {
+        latitude: 40.704941,
+        longitude: -74.008943
+      },
+      destination: {
+        latitude: this.props.allRestrooms[0].coordinates.latitude,
+        longitude: this.props.allRestrooms[0].coordinates.longitude
+      },
+      params: [
+        {
+          key: "travelmode",
+          value: "walking" // may be "walking", "bicycling" or "transit" as well
+        },
+        {
+          key: "dir_action",
+          value: "navigate" // this instantly initializes navigation using the given travel mode
+        }
+      ]
+    };
+
+    getDirections(data);
+  };
   render() {
     return (
       <Container>
@@ -35,63 +58,44 @@ class Go extends Component {
             padding: 10
           }}
         >
-          <MapView
-            style={styles.map}
-            initialRegion={{
-              latitude: 37.78825,
-              longitude: -122.4324,
-              latitudeDelta: 0.0922,
-              longitudeDelta: 0.0421
-            }}
-          >
-            <MapView.Marker
-              coordinate={{
-                latitude: 37.78825,
-                longitude: -122.4324
-              }}
-            >
-              <View style={styles.radius}>
-                <View style={styles.marker} />
-              </View>
-            </MapView.Marker>
-          </MapView>
+          <Text style={styles.text}>Take me to the nearest restroom!</Text>
+
+          <Button style={styles.submit} onPress={this.handleGetDirections}>
+            GO!
+          </Button>
         </Content>
       </Container>
     );
   }
 }
 
-export default Go;
+const mapStateToProps = state => {
+  return { allRestrooms: state.allRestrooms };
+};
+
+export default connect(mapStateToProps)(Go);
 
 const styles = StyleSheet.create({
   icon: {
     width: 24,
     height: 24
   },
-  map: {
-    left: 0,
-    right: 0,
-    top: 0,
-    bottom: 0,
-    position: "absolute"
-  },
-  radius: {
-    width: 50,
-    height: 50,
-    borderRadius: 50 / 2,
-    overflow: `hidden`,
-    backgroundColor: "rgba(0,122,255,0.1)",
-    borderWidth: 1,
-    alignItems: "center",
-    justifyContent: "center"
-  },
-  marker: {
-    height: 20,
-    width: 20,
-    borderWidth: 3,
-    borderColor: "white",
-    borderRadius: 20 / 2,
+  submit: {
+    backgroundColor: "#119eec",
     overflow: "hidden",
-    backgroundColor: "#007AFF"
+    borderRadius: 125,
+    width: 250,
+    height: 250,
+    fontSize: 100,
+    color: "white",
+    fontWeight: "bold",
+    paddingTop: 65
+  },
+  text: {
+    fontSize: 25,
+    fontStyle: "italic",
+    textAlign: "center",
+    marginTop: 0,
+    marginBottom: 15
   }
 });
