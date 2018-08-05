@@ -29,7 +29,7 @@ import { withNavigation, DrawerActions } from "react-navigation";
 import Results from "./Results/";
 //--------------------------------------------------------------------
 import { connect } from "react-redux";
-import { getRestroom } from "../store/thunks";
+// import { getRestroom } from "../store/thunks";
 //--------------------------------------------------------------------
 const { width, height } = Dimensions.get("window");
 const SCREEN_HEIGHT = height;

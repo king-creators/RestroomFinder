@@ -28,8 +28,8 @@ import Hamburger from "react-native-hamburger";
 import { withNavigation, DrawerActions } from "react-navigation";
 //--------------------------------------------------------------------
 import { connect } from "react-redux";
-import { getRestroom } from "../store/thunks";
 //--------------------------------------------------------------------
+import {getRestroom,Loading} from '../store/Restrooms'
 const { width, height } = Dimensions.get("window");
 const SCREEN_HEIGHT = height;
 const SCREEN_WIDTH = width;
@@ -57,12 +57,16 @@ class HomeView extends Component {
   }
 
   componentDidMount() {
-    this.props.getRestroom();
+    this.props.Loading()
     navigator.geolocation.getCurrentPosition(
       position => {
         let lat = parseFloat(position.coords.latitude);
         let long = parseFloat(position.coords.longitude);
-
+        
+        this.props.getRestroom({
+          latitude: lat,
+          longitude: long
+        });
         const initalRegion = {
           latitude: lat,
           longitude: long,
@@ -101,25 +105,14 @@ class HomeView extends Component {
     this.props.screenProps.navigation.dispatch(DrawerActions.toggleDrawer());
   };
   render() {
-    // console.log(this.props.restroom);
-    const allRestrooms = this.props.restroom;
-    // console.log(this.props);
-    // console.log(allRestrooms);
+    const isLoading = this.props.isLoading
+    console.log(isLoading)
+    const allRestrooms = this.props.allRestrooms;
+    
     return (
       <React.Fragment>
         <Container>
           <CustomHeader title="Home" toggleDrawer={this.toggleDrawer} />
-          {/* <Header>
-            <Left>
-              <Icon name="ios-menu" onPress={() => this.toggleDrawer()} />
-              {/* <Icon name="ios-menu" onPress={() => this.toggleDrawer()} /> */}
-          {/* </Left>
-            <Body>
-              <Title>Home</Title>
-            </Body>
-            <Right />
-          </Header> */}{" "}
-          */}
           <Content
             contentContainerStyle={{
               flex: 1,
@@ -127,31 +120,69 @@ class HomeView extends Component {
               justifyContent: "center",
               padding: 10
             }}
-          >
-            <MapView style={styles.map} region={this.state.initialPostion}>
+          > 
+            {
+              isLoading ?
+              
+                          
+            <View style={{ flexGrow: 1, alignItems: 'center', justifyContent: 'center' }}>
+            <Text>Loading...</Text>
+          </View>
+              
+              : 
+              
+              <MapView style={styles.map} region={this.state.initialPostion}>
               <MapView.Marker coordinate={this.state.markerPosition}>
                 <View style={styles.radius}>
                   <View style={styles.marker} />
                 </View>
               </MapView.Marker>
               {/* restrooms */}
+                {
+                  
+                }
+                {
+                  allRestrooms.length < 1 ? null : allRestrooms.map((restroom)=>{
+                    return (
+                      <MapView.Marker
+                      key={restroom.id}
+                      coordinate={{ 
+                        latitude: restroom.coordinates.latitude,
+                        longitude:  restroom.coordinates.longitude
+                      }}
+                    >
+                        </MapView.Marker>
+                    )
+                  })
+                }
+
+  
+            {/* restrooms */}
             </MapView>
+          
+            }
+
+          
+
           </Content>
         </Container>
-      </React.Fragment>
+      </React.Fragment> 
     );
   }
 }
 
 const MapDispatchToProps = dispatch => {
   return {
-    getRestroom: () => dispatch(getRestroom())
+    getRestroom: (userlocation) => dispatch(getRestroom(userlocation)),
+    Loading : ()=> dispatch(Loading())
   };
 };
 
 const MapStateToProps = state => {
   return {
-    restroom: state.restroom
+    allRestrooms: state.restroom.allRestrooms,
+    isLoading : state.restroom.isLoading,
+    oneRestroom : state.restroom.oneRestroom
   };
 };
 
@@ -244,14 +275,14 @@ const styles = StyleSheet.create({
 //   {
 //     allRestrooms.map((restroom)=>{
 //       return(
-//         <MapView.Marker
-//         key={restroom.id}
-//         coordinate={{
-//           latitude: restroom.coordinates.latitude,
-//           longitude:  restroom.coordinates.longitude
-//         }}
-//         >
-//         </MapView.Marker>
+        // <MapView.Marker
+        // key={restroom.id}
+        // coordinate={{
+        //   latitude: restroom.coordinates.latitude,
+        //   longitude:  restroom.coordinates.longitude
+        // }}
+        // >
+        // </MapView.Marker>
 //       )
 //     })
 //   }
