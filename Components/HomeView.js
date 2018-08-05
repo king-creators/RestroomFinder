@@ -27,15 +27,17 @@ import Ionicons from "react-native-vector-icons/Ionicons";
 import Hamburger from "react-native-hamburger";
 import { withNavigation, DrawerActions } from "react-navigation";
 //--------------------------------------------------------------------
-import {connect} from 'react-redux'
-import {getRestroom, Loading} from '../store/Restrooms'
+
+import { connect } from "react-redux";
 //--------------------------------------------------------------------
-const {width,height } = Dimensions.get('window')
-const SCREEN_HEIGHT = height
-const SCREEN_WIDTH = width
-const ASPECT_RATION = SCREEN_WIDTH / SCREEN_HEIGHT
-const LATTITUDE_DELTA = 0.0922
-const LONGTITUDE_DELTA = LATTITUDE_DELTA * ASPECT_RATION 
+import {getRestroom,Loading} from '../store/Restrooms'
+const { width, height } = Dimensions.get("window");
+const SCREEN_HEIGHT = height;
+const SCREEN_WIDTH = width;
+const ASPECT_RATION = SCREEN_WIDTH / SCREEN_HEIGHT;
+const LATTITUDE_DELTA = 0.0922;
+const LONGTITUDE_DELTA = LATTITUDE_DELTA * ASPECT_RATION;
+
 
 class HomeView extends Component {
   constructor(props) {
@@ -55,18 +57,21 @@ class HomeView extends Component {
     }
     allRestrooms : []
   }
-  
-  componentDidMount(){
+
+
+  componentDidMount() {
+
     this.props.Loading()
     navigator.geolocation.getCurrentPosition(
       position => {
         let lat = parseFloat(position.coords.latitude);
         let long = parseFloat(position.coords.longitude);
 
+        
         this.props.getRestroom({
           latitude: lat,
           longitude: long
-        })
+        });
 
         const initalRegion = {
           latitude: lat,
@@ -108,30 +113,22 @@ class HomeView extends Component {
   };
   render() {
     const isLoading = this.props.isLoading
-    console.log('isLoading: ', isLoading);
-    const allRestrooms = this.props.allRestrooms
-    console.log('allRestrooms: ', allRestrooms);
-      
-    return (
-      <Container>
 
-        {/* {
-          isLoading ? 
-          <View style={{ flexGrow: 1, alignItems: 'center', justifyContent: 'center' }}>
-          <Text>Loading...</Text>
-          {this.state.error ? <Text>Error: {this.state.error}</Text> : null}
-        </View>
-          
-          :    */}
-        <Content
-          contentContainerStyle={{
-            flex: 1,
-            alignItems: "center",
-            justifyContent: "center",   
-            padding: 10
-          }}
-        >
-                  {/* // Map View   */} 
+    console.log(isLoading)
+    const allRestrooms = this.props.allRestrooms;
+    
+    return (
+      <React.Fragment>
+        <Container>
+          <CustomHeader title="Home" toggleDrawer={this.toggleDrawer} />
+          <Content
+            contentContainerStyle={{
+              flex: 1,
+              alignItems: "center",
+              justifyContent: "center",
+              padding: 10
+            }}
+          > 
                   <MapView
                   style={styles.map}
                   region={this.state.initialPostion}
@@ -160,34 +157,34 @@ class HomeView extends Component {
                       })
                     }
 
-                    {/* restroom */}
-      
-                </MapView>
-      
-                {/* //  Map View    */}
+              </MapView>
         
-
-        </Content>
+          </Content>
+        </Container>        
+        </React.Fragment> 
         
-      </Container>
     );
   }
 }
 
 const MapDispatchToProps = dispatch => {
   return {
-    getRestroom : (userLocation)=> dispatch(getRestroom(userLocation)),
+
+    getRestroom: (userlocation) => dispatch(getRestroom(userlocation)),
     Loading : ()=> dispatch(Loading())
-  }
-}
+  };
+};
 
 const MapStateToProps = state => {
   return {
-    allRestrooms : state.restroom.allRestrooms,
+    allRestrooms: state.restroom.allRestrooms,
     isLoading : state.restroom.isLoading,
     oneRestroom : state.restroom.oneRestroom
-  }
-}
+  };
+};
+
+const newHome = withNavigation(HomeView);
+
 
 export default connect(
   MapStateToProps,
@@ -283,10 +280,72 @@ const styles = StyleSheet.create({
         //   longitude:  restroom.coordinates.longitude
         // }}
         // >
-//         </MapView.Marker>
+
+        // </MapView.Marker>
+
 //       )
 //     })
 //   }
 // </MapView>
 
 // }
+
+{/* <View style={{ flexGrow: 1, alignItems: 'center', justifyContent: 'center' }}>
+            <Text>Loading...</Text>
+          </View> */}
+
+
+        //   <MapView
+        //   style={styles.map}
+        //   region={this.state.initialPostion}
+        // >
+        //   <MapView.Marker
+        //     coordinate={this.state.markerPosition} 
+        //   >
+        //     <View style={styles.radius}> 
+        //       <View style={styles.marker} />
+        //     </View>
+        //   </MapView.Marker>
+        //     {/* restrooms */}
+        //     {
+        //       allRestrooms.length < 1 ? null : allRestrooms.map((restroom)=>{
+        //         return (
+        //           <MapView.Marker
+        //           key={restroom.id}
+        //           coordinate={{
+        //             latitude: restroom.coordinates.latitude,
+        //             longitude: restroom.coordinates.longitude,
+        //           }}
+                  
+        //           >
+        //           </MapView.Marker>
+        //         ) 
+        //       })
+        //     }
+        //   </MapView>
+
+        // <MapView style={styles.map} region={this.state.initialPostion}>
+        // <MapView.Marker coordinate={this.state.markerPosition}>
+        //   <View style={styles.radius}>
+        //     <View style={styles.marker} />
+        //   </View>
+
+        // </MapView.Marker>
+        // {/* </MapView> */}
+
+
+        //   {
+        //     allRestrooms.length < 1 ? null : allRestrooms.map((restroom)=>{
+        //       return (
+        //         <MapView.Marker
+        //         key={restroom.id}
+        //         coordinate={{ 
+        //           latitude: restroom.coordinates.latitude,
+        //           longitude:  restroom.coordinates.longitude
+        //         }}
+        //       >
+        //           </MapView.Marker>
+        //       )
+        //     })
+        //   }
+        //   </MapView>
