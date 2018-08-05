@@ -30,9 +30,9 @@ const userLocationAction = (payload) => ({type: USER_LOCATION, payload})
 
 export const getRestroom = userLocation => async dispatch =>{
         try {
+
         dispatch(userLocationAction(userLocation))
         const result = await axios.post(`${path}/restroom/`,userLocation)
-        console.log(result.data)
         dispatch(gotRestrooms(result.data))
         } catch (error) {
         console.log(error)
