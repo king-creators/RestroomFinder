@@ -1,14 +1,14 @@
 const db = require("./db");
 const Sequelize = require("sequelize");
 
-const Restroom = db.define("restroom", {
+const Rating = db.define("rating", {
   yelpId: {
     type: Sequelize.STRING,
     allowNull: false
   },
-  waitTime: {
+  rating: {
     type: Sequelize.INTEGER
   }
 });
 
-module.exports = Restroom;
+module.exports = Rating;
