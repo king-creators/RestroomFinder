@@ -32,11 +32,12 @@ import Communications from "react-native-communications";
 
 class Restroom extends Component {
   render() {
-    const uri = "https://www.yelp.com/menu/kish-kash-new-york";
+    const uri = this.props.location.state.url;
     const ratingObj = {
-      ratings: 4,
+      ratings: this.props.location.state.rating,
       views: 100
     };
+    const restroom = this.props.location.state
     return (
       <ScrollView>
         <Header>
@@ -53,19 +54,18 @@ class Restroom extends Component {
         </Header>
 
         <Image
-          style={{ width: 320, height: 200 }}
+          style={{ width: 380, height: 200 }}
           source={{
-            uri:
-              "https://i.pinimg.com/736x/a1/17/bc/a117bc5fb40e42a8d18491123f22ae73--sign-maker-signage.jpg"
+            uri: restroom.image_url
           }}
         />
 
-        <Text style={styles.title}>Restaurant Name</Text>
-        <Text style={styles.text}>8524 52nd Ave., Elmhurst, NY 11373</Text>
+        <Text style={styles.title}>{restroom.name}</Text>
+        <Text style={styles.text}>{restroom.location.address1}  </Text>
         <TouchableOpacity
-          onPress={() => Communications.phonecall("718-766-9844", true)}
+          onPress={() => Communications.phonecall(restroom.phone, true)}
         >
-          <Text style={styles.textBlue}>7187669844</Text>
+          <Text style={styles.textBlue}>{restroom.phone}</Text>
         </TouchableOpacity>
         <Text style={styles.text}>Average wait time: 10 minutes</Text>
         <Text style={styles.spacing}>
@@ -73,7 +73,7 @@ class Restroom extends Component {
         </Text>
         <TouchableOpacity onPress={() => Communications.web(uri)}>
           <View style={styles.holder}>
-            <Text style={styles.textBlue}>View Menu</Text>
+            <Text style={styles.textBlue}>View Menu on Yelp </Text>
           </View>
         </TouchableOpacity>
 

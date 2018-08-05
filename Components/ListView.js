@@ -51,7 +51,7 @@ class ListView extends Component {
       <React.Fragment>
         {/* <CustomHeader title="List View" /> */}
         <Results toggleDrawer={this.toggleDrawer} />
-      </React.Fragment>
+      </React.Fragment> 
     );
   }
 }

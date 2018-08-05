@@ -73,7 +73,12 @@ class ListCard extends Component {
             <CardAction separator={false} inColumn={false}>
               <CardButton
                 style={styles.top}
-                onPress={() => history.push("/Restroom")}
+                onPress={() => history.push({
+                  pathname: "/Restroom",
+                  state : this.props.restroom
+                    
+                
+                })}
                 title={restroom.name}
                 color="#FEB557"
               />
