@@ -6,14 +6,15 @@ const {yelpKey} = require('../../secret')
 const apiKey = yelpKey;
 
 router.post("/", async (req, res, next) => {
-  console.log('api side',req.body)
+
+  console.log('api side', req.body)
   try {
     const searchRequest = {
-      term:'restaurants',
-      radius: "3218",
+      term:'restaurants+fast+food+coffee+shop',
       latitude : req.body.latitude,
       longitude: req.body.longitude,
-      open_now: true
+      radius: "6437"
+
     }
 
     const client = yelp.client(apiKey); 
@@ -27,5 +28,5 @@ router.post("/", async (req, res, next) => {
   }
 });
 
-
+ 
 module.exports = router;
