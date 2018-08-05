@@ -22,7 +22,7 @@ import Restroom from "./Restroom";
 const history = createHistory();
 
 const Results = props => {
-  console.log(props);
+  // console.log(props);
   return (
     <Router history={history}>
       <View style={{ flex: 1 }}>

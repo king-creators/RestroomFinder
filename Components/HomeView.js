@@ -129,6 +129,8 @@ class HomeView extends Component {
               padding: 10
             }}
           > 
+
+
                   <MapView
                   style={styles.map}
                   region={this.state.initialPostion}
@@ -156,6 +158,7 @@ class HomeView extends Component {
                         ) 
                       })
                     }
+
 
               </MapView>
         
