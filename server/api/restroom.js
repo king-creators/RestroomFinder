@@ -5,21 +5,24 @@ const yelp = require('yelp-fusion')
 const {yelpKey} = require('../../secret')
 const apiKey = yelpKey;
 
-router.get("/", async (req, res, next) => {
+router.post("/", async (req, res, next) => {
+  console.log('api side',req.body)
   try {
     const searchRequest = {
       term:'restaurants',
-      location: '10004',
-      radius: "3218"
+      radius: "3218",
+      latitude : req.body.latitude,
+      longitude: req.body.longitude,
+      open_now: true
     }
 
-    const client = yelp.client(apiKey);
+    const client = yelp.client(apiKey); 
     const result = await client.search(searchRequest)
     const result2 = result.jsonBody.businesses;
     // const final = JSON.stringify(result2,null,4);
     res.json(result2)
 
-  } catch (error) {
+  } catch (error) { 
     next(error);
   }
 });

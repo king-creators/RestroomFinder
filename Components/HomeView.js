@@ -27,15 +27,15 @@ import Ionicons from "react-native-vector-icons/Ionicons";
 import Hamburger from "react-native-hamburger";
 import { withNavigation, DrawerActions } from "react-navigation";
 //--------------------------------------------------------------------
-import { connect } from "react-redux";
-import { getRestroom } from "../store/thunks";
+import {connect} from 'react-redux'
+import {getRestroom, Loading} from '../store/Restrooms'
 //--------------------------------------------------------------------
-const { width, height } = Dimensions.get("window");
-const SCREEN_HEIGHT = height;
-const SCREEN_WIDTH = width;
-const ASPECT_RATION = SCREEN_WIDTH / SCREEN_HEIGHT;
-const LATTITUDE_DELTA = 0.0922;
-const LONGTITUDE_DELTA = LATTITUDE_DELTA * ASPECT_RATION;
+const {width,height } = Dimensions.get('window')
+const SCREEN_HEIGHT = height
+const SCREEN_WIDTH = width
+const ASPECT_RATION = SCREEN_WIDTH / SCREEN_HEIGHT
+const LATTITUDE_DELTA = 0.0922
+const LONGTITUDE_DELTA = LATTITUDE_DELTA * ASPECT_RATION 
 
 class HomeView extends Component {
   constructor(props) {
@@ -52,16 +52,21 @@ class HomeView extends Component {
         latitude: 0,
         longitude: 0
       }
-    };
-    this.toggleDrawer = this.toggleDrawer.bind(this);
+    }
+    allRestrooms : []
   }
-
-  componentDidMount() {
-    this.props.getRestroom();
+  
+  componentDidMount(){
+    this.props.Loading()
     navigator.geolocation.getCurrentPosition(
       position => {
         let lat = parseFloat(position.coords.latitude);
         let long = parseFloat(position.coords.longitude);
+
+        this.props.getRestroom({
+          latitude: lat,
+          longitude: long
+        })
 
         const initalRegion = {
           latitude: lat,
@@ -85,82 +90,108 @@ class HomeView extends Component {
       let long = parseFloat(position.coords.longitude);
       let lastRegion = {
         latitude: lat,
-        longitude: long,
-        latitudeDelta: LATTITUDE_DELTA,
-        longitudeDelta: LONGTITUDE_DELTA
-      };
-      this.setState({ initialPostion: lastRegion });
-      this.setState({ markerPosition: lastRegion });
-    });
+        longitude: long, 
+        latitudeDelta: LATTITUDE_DELTA, 
+        longitudeDelta: LONGTITUDE_DELTA,
+      }
+      this.setState({initialPostion: lastRegion})
+      this.setState({markerPosition: lastRegion})
+    })
   }
-
-  componentWillUnmount() {
-    navigator.geolocation.clearWatch(this.watchId);
+  
+  componentWillUnmount(){
+    navigator.geolocation.clearWatch(this.watchId)
   }
   toggleDrawer = () => {
     this.props.screenProps.navigation.dispatch(DrawerActions.toggleDrawer());
   };
   render() {
-    // console.log(this.props.restroom);
-    const allRestrooms = this.props.restroom;
-    // console.log(this.props);
-    // console.log(allRestrooms);
+    const isLoading = this.props.isLoading
+    console.log('isLoading: ', isLoading);
+    const allRestrooms = this.props.allRestrooms
+    console.log('allRestrooms: ', allRestrooms);
+      
     return (
-      <React.Fragment>
-        <Container>
-          <CustomHeader title="Home" toggleDrawer={this.toggleDrawer} />
-          {/* <Header>
-            <Left>
-              <Icon name="ios-menu" onPress={() => this.toggleDrawer()} />
-              {/* <Icon name="ios-menu" onPress={() => this.toggleDrawer()} /> */}
-          {/* </Left>
-            <Body>
-              <Title>Home</Title>
-            </Body>
-            <Right />
-          </Header> */}{" "}
-          */}
-          <Content
-            contentContainerStyle={{
-              flex: 1,
-              alignItems: "center",
-              justifyContent: "center",
-              padding: 10
-            }}
-          >
-            <MapView style={styles.map} region={this.state.initialPostion}>
-              <MapView.Marker coordinate={this.state.markerPosition}>
-                <View style={styles.radius}>
-                  <View style={styles.marker} />
-                </View>
-              </MapView.Marker>
-              {/* restrooms */}
-            </MapView>
-          </Content>
-        </Container>
-      </React.Fragment>
+      <Container>
+
+        {
+          isLoading ? 
+          <View style={{ flexGrow: 1, alignItems: 'center', justifyContent: 'center' }}>
+          <Text>Loading...</Text>
+          {this.state.error ? <Text>Error: {this.state.error}</Text> : null}
+        </View>
+          
+          :   
+        <Content
+          contentContainerStyle={{
+            flex: 1,
+            alignItems: "center",
+            justifyContent: "center", 
+            padding: 10
+          }}
+        >
+                  {/* // Map View   */} 
+                  <MapView
+                  style={styles.map}
+                  region={this.state.initialPostion}
+                >
+                  <MapView.Marker
+                    coordinate={this.state.markerPosition} 
+                  >
+                    <View style={styles.radius}> 
+                      <View style={styles.marker} />
+                    </View>
+                  </MapView.Marker>
+                    {/* restrooms */}
+                    {
+                      allRestrooms.length < 1 ? null : allRestrooms.map((restroom)=>{
+                        return (
+                          <MapView.Marker
+                          key={restroom.id}
+                          coordinate={{
+                            latitude: restroom.coordinates.latitude,
+                            longitude: restroom.coordinates.longitude,
+                          }}
+                          
+                          >
+                          </MapView.Marker>
+                        ) 
+                      })
+                    }
+
+                    {/* restroom */}
+      
+                </MapView>
+      
+                {/* //  Map View    */}
+        
+
+        </Content>
+        }
+      </Container>
     );
   }
 }
 
 const MapDispatchToProps = dispatch => {
   return {
-    getRestroom: () => dispatch(getRestroom())
-  };
-};
+    getRestroom : (userLocation)=> dispatch(getRestroom(userLocation)),
+    Loading : ()=> dispatch(Loading())
+  }
+}
 
 const MapStateToProps = state => {
   return {
-    restroom: state.restroom
-  };
-};
-
-const newHome = withNavigation(HomeView);
+    allRestrooms : state.restroom.allRestrooms,
+    isLoading : state.restroom.isLoading,
+    oneRestroom : state.restroom.oneRestroom
+  }
+}
 
 export default connect(
   MapStateToProps,
   MapDispatchToProps
-)(newHome);
+)(HomeView);
 
 const styles = StyleSheet.create({
   icon: {
@@ -244,13 +275,13 @@ const styles = StyleSheet.create({
 //   {
 //     allRestrooms.map((restroom)=>{
 //       return(
-//         <MapView.Marker
-//         key={restroom.id}
-//         coordinate={{
-//           latitude: restroom.coordinates.latitude,
-//           longitude:  restroom.coordinates.longitude
-//         }}
-//         >
+        // <MapView.Marker
+        // key={restroom.id}
+        // coordinate={{
+        //   latitude: restroom.coordinates.latitude,
+        //   longitude:  restroom.coordinates.longitude
+        // }}
+        // >
 //         </MapView.Marker>
 //       )
 //     })
