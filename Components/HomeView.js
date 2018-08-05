@@ -35,7 +35,7 @@ const { width, height } = Dimensions.get("window");
 const SCREEN_HEIGHT = height;
 const SCREEN_WIDTH = width;
 const ASPECT_RATION = SCREEN_WIDTH / SCREEN_HEIGHT;
-const LATTITUDE_DELTA = 0.0922;
+const LATTITUDE_DELTA = 0.00322;
 const LONGTITUDE_DELTA = LATTITUDE_DELTA * ASPECT_RATION;
 
 
@@ -130,6 +130,23 @@ class HomeView extends Component {
             }}
           > 
 
+          {
+
+
+            isLoading ?  
+            
+            <View style={{ flexGrow: 1, alignItems: 'center', justifyContent: 'center' }}>
+                <Image
+                  source={require('./_assets/loading.gif')}
+                />
+            <Text>Loading...</Text>
+            </View> 
+          : 
+
+ 
+          
+
+
 
                   <MapView
                   style={styles.map}
@@ -146,30 +163,37 @@ class HomeView extends Component {
                     {
                       allRestrooms.length < 1 ? null : allRestrooms.map((restroom)=>{
                         return (
+                      
                           <MapView.Marker
                           key={restroom.id}
                           coordinate={{
                             latitude: restroom.coordinates.latitude,
                             longitude: restroom.coordinates.longitude,
                           }}
-                          
+                          title={restroom.name}
+                          description={restroom.location.address1}
+                          image={require('./_assets/toilet-paper.png')}
                           >
                           </MapView.Marker>
                         ) 
                       })
                     }
-
-
               </MapView>
+          }
+
+
+
+
+
         
           </Content>
         </Container>        
         </React.Fragment> 
         
     );
-  }
+  } 
 }
-
+ 
 const MapDispatchToProps = dispatch => {
   return {
 
@@ -224,6 +248,12 @@ const styles = StyleSheet.create({
     borderRadius: 20 / 2,
     overflow: "hidden",
     backgroundColor: "#007AFF"
+  },
+  restroom : {
+    height: 20,
+    width: 20,
+    borderWidth: 3,
+    borderColor: "red",
   }
 });
 
@@ -293,9 +323,7 @@ const styles = StyleSheet.create({
 
 // }
 
-{/* <View style={{ flexGrow: 1, alignItems: 'center', justifyContent: 'center' }}>
-            <Text>Loading...</Text>
-          </View> */}
+
 
 
         //   <MapView
