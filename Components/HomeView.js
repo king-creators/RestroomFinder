@@ -139,7 +139,7 @@ class HomeView extends Component {
                 <Image
                   source={require('./_assets/loading.gif')}
                 />
-            <Text>Loading...</Text>
+            <Text>Loading...</Text> 
             </View> 
           : 
 
