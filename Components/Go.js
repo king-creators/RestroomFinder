@@ -25,8 +25,8 @@ class Go extends Component {
   handleGetDirections = () => {
     const data = {
       source: {
-        latitude: 40.704941,
-        longitude: -74.008943
+        latitude: this.props.userCurrentLocation.latitude,
+        longitude: this.props.userCurrentLocation.longitude
       },
       destination: {
         latitude: this.props.allRestrooms[0].coordinates.latitude,
@@ -47,6 +47,7 @@ class Go extends Component {
     getDirections(data);
   };
   render() {
+    console.log(this.props);
     return (
       <Container>
         <CustomHeader title="Nearest You" />
@@ -70,7 +71,10 @@ class Go extends Component {
 }
 
 const mapStateToProps = state => {
-  return { allRestrooms: state.allRestrooms };
+  return {
+    allRestrooms: state.restroom.allRestrooms,
+    userCurrentLocation: state.restroom.userCurrentLocation
+  };
 };
 
 export default connect(mapStateToProps)(Go);
