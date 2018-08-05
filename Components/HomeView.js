@@ -127,7 +127,7 @@ class HomeView extends Component {
               alignItems: "center",
               justifyContent: "center",
               padding: 10
-            }}
+            }} 
           > 
 
           {
