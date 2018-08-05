@@ -1,7 +1,7 @@
 //imports 
 import axios from "axios";
-const path = "http://localhost:3000/api";
-
+// const path = "http://localhost:3000/api";
+const path ='http://172.16.23.222:3000/api'
 // //----------------------------------------------------------------
 // //Constants
 // //----------------------------------------------------------------
