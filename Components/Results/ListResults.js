@@ -19,18 +19,6 @@ class ListResults extends Component {
     super();
     this.toggleDrawer = this.toggleDrawer.bind(this);
   }
-  // static navigationOptions = ({ navigation }) => ({
-  //   title: "View List",
-  //   drawerIcon: () => <Ionicons name="md-home" size={24} />
-  //   // (
-  //   // <Image
-  //   //   source="https://png.icons8.com/metro/1600/settings.png"
-  //   //   style={[styles.icon]}
-  //   // />
-  //   //   <ion-icon ios="ios-log-in" md="md-log-in" />
-
-  //   // )
-  // });
   toggleDrawer = () => {
     this.props.navigation.dispatch(DrawerActions.toggleDrawer());
   };
@@ -41,24 +29,10 @@ class ListResults extends Component {
     return (
       <React.Fragment>
         <ScrollView>
-          {/* <Header>
-            <Button onPress={this.toggleDrawer} title="haha" />
-          </Header> */}
           <CustomHeader
             title="View List"
             toggleDrawer={this.props.toggleDrawer}
           />
-          {/* <Header>
-          <Left>
-            <Icon name="ios-menu" onPress={() => this.toggleDrawer()} />
-            {/* <Icon name="ios-menu" onPress={() => this.toggleDrawer()} /> */}
-          {/* </Left>
-          <Body>
-            <Title>View List</Title>
-          </Body>
-          <Right />
-        </Header> */}{" "}
-          */}
           <Content
             contentContainerStyle={{
               flex: 1

@@ -6,6 +6,7 @@ const {yelpKey} = require('../../secret')
 const apiKey = yelpKey;
 
 router.post("/", async (req, res, next) => {
+
   console.log('api side', req.body)
   try {
     const searchRequest = {
@@ -13,15 +14,16 @@ router.post("/", async (req, res, next) => {
       latitude : req.body.latitude,
       longitude: req.body.longitude,
       radius: "6437"
+
     }
 
-    const client = yelp.client(apiKey);
+    const client = yelp.client(apiKey); 
     const result = await client.search(searchRequest)
     const result2 = result.jsonBody.businesses;
     // const final = JSON.stringify(result2,null,4);
     res.json(result2)
 
-  } catch (error) {
+  } catch (error) { 
     next(error);
   }
 });

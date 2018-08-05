@@ -27,6 +27,7 @@ import Ionicons from "react-native-vector-icons/Ionicons";
 import Hamburger from "react-native-hamburger";
 import { withNavigation, DrawerActions } from "react-navigation";
 //--------------------------------------------------------------------
+
 import { connect } from "react-redux";
 //--------------------------------------------------------------------
 import {getRestroom,Loading} from '../store/Restrooms'
@@ -36,6 +37,7 @@ const SCREEN_WIDTH = width;
 const ASPECT_RATION = SCREEN_WIDTH / SCREEN_HEIGHT;
 const LATTITUDE_DELTA = 0.0922;
 const LONGTITUDE_DELTA = LATTITUDE_DELTA * ASPECT_RATION;
+
 
 class HomeView extends Component {
   constructor(props) {
@@ -52,21 +54,25 @@ class HomeView extends Component {
         latitude: 0,
         longitude: 0
       }
-    };
-    this.toggleDrawer = this.toggleDrawer.bind(this);
+    }
+    allRestrooms : []
   }
 
+
   componentDidMount() {
+
     this.props.Loading()
     navigator.geolocation.getCurrentPosition(
       position => {
         let lat = parseFloat(position.coords.latitude);
         let long = parseFloat(position.coords.longitude);
+
         
         this.props.getRestroom({
           latitude: lat,
           longitude: long
         });
+
         const initalRegion = {
           latitude: lat,
           longitude: long,
@@ -89,23 +95,24 @@ class HomeView extends Component {
       let long = parseFloat(position.coords.longitude);
       let lastRegion = {
         latitude: lat,
-        longitude: long,
-        latitudeDelta: LATTITUDE_DELTA,
-        longitudeDelta: LONGTITUDE_DELTA
-      };
-      this.setState({ initialPostion: lastRegion });
-      this.setState({ markerPosition: lastRegion });
-    });
+        longitude: long, 
+        latitudeDelta: LATTITUDE_DELTA, 
+        longitudeDelta: LONGTITUDE_DELTA,
+      }
+      this.setState({initialPostion: lastRegion})
+      this.setState({markerPosition: lastRegion})
+    })
   }
-
-  componentWillUnmount() {
-    navigator.geolocation.clearWatch(this.watchId);
+  
+  componentWillUnmount(){
+    navigator.geolocation.clearWatch(this.watchId)
   }
   toggleDrawer = () => {
     this.props.screenProps.navigation.dispatch(DrawerActions.toggleDrawer());
   };
   render() {
     const isLoading = this.props.isLoading
+
     console.log(isLoading)
     const allRestrooms = this.props.allRestrooms;
     
@@ -167,12 +174,14 @@ class HomeView extends Component {
           </Content>
         </Container>
       </React.Fragment> 
+
     );
   }
 }
 
 const MapDispatchToProps = dispatch => {
   return {
+
     getRestroom: (userlocation) => dispatch(getRestroom(userlocation)),
     Loading : ()=> dispatch(Loading())
   };
@@ -188,10 +197,11 @@ const MapStateToProps = state => {
 
 const newHome = withNavigation(HomeView);
 
+
 export default connect(
   MapStateToProps,
   MapDispatchToProps
-)(newHome);
+)(HomeView);
 
 const styles = StyleSheet.create({
   icon: {
@@ -282,7 +292,9 @@ const styles = StyleSheet.create({
         //   longitude:  restroom.coordinates.longitude
         // }}
         // >
+
         // </MapView.Marker>
+
 //       )
 //     })
 //   }
