@@ -129,58 +129,8 @@ class HomeView extends Component {
               padding: 10
             }}
           > 
-            {
-              isLoading ?
-              
-                          
-            <View style={{ flexGrow: 1, alignItems: 'center', justifyContent: 'center' }}>
-            <Text>Loading...</Text>
-          </View>
-              
-              : 
-              
-              <MapView style={styles.map} region={this.state.initialPostion}>
-              <MapView.Marker coordinate={this.state.markerPosition}>
-                <View style={styles.radius}>
-                  <View style={styles.marker} />
-                </View>
-              </MapView.Marker>
-              {/* restrooms */}
-                {
-                  
-                }
-                {
-                  allRestrooms.length < 1 ? null : allRestrooms.map((restroom)=>{
-                    return (
-                      <MapView.Marker
-                      key={restroom.id}
-                      coordinate={{ 
-                        latitude: restroom.coordinates.latitude,
-                        longitude:  restroom.coordinates.longitude
-                      }}
-                    >
-                        </MapView.Marker>
-                    )
-                  })
-                }
 
-        {/* {
-          isLoading ? 
-          <View style={{ flexGrow: 1, alignItems: 'center', justifyContent: 'center' }}>
-          <Text>Loading...</Text>
-          {this.state.error ? <Text>Error: {this.state.error}</Text> : null}
-        </View>
-          
-          :    */}
-        <Content
-          contentContainerStyle={{
-            flex: 1,
-            alignItems: "center",
-            justifyContent: "center",   
-            padding: 10
-          }}
-        >
-                  {/* // Map View   */} 
+
                   <MapView
                   style={styles.map}
                   region={this.state.initialPostion}
@@ -210,17 +160,12 @@ class HomeView extends Component {
                     }
 
 
-          
-
-          </Content>
-        </Container>
-      </React.Fragment> 
-
-
-        </Content>
+              </MapView>
         
-      </Container>
-
+          </Content>
+        </Container>        
+        </React.Fragment> 
+        
     );
   }
 }
@@ -347,3 +292,63 @@ const styles = StyleSheet.create({
 // </MapView>
 
 // }
+
+{/* <View style={{ flexGrow: 1, alignItems: 'center', justifyContent: 'center' }}>
+            <Text>Loading...</Text>
+          </View> */}
+
+
+        //   <MapView
+        //   style={styles.map}
+        //   region={this.state.initialPostion}
+        // >
+        //   <MapView.Marker
+        //     coordinate={this.state.markerPosition} 
+        //   >
+        //     <View style={styles.radius}> 
+        //       <View style={styles.marker} />
+        //     </View>
+        //   </MapView.Marker>
+        //     {/* restrooms */}
+        //     {
+        //       allRestrooms.length < 1 ? null : allRestrooms.map((restroom)=>{
+        //         return (
+        //           <MapView.Marker
+        //           key={restroom.id}
+        //           coordinate={{
+        //             latitude: restroom.coordinates.latitude,
+        //             longitude: restroom.coordinates.longitude,
+        //           }}
+                  
+        //           >
+        //           </MapView.Marker>
+        //         ) 
+        //       })
+        //     }
+        //   </MapView>
+
+        // <MapView style={styles.map} region={this.state.initialPostion}>
+        // <MapView.Marker coordinate={this.state.markerPosition}>
+        //   <View style={styles.radius}>
+        //     <View style={styles.marker} />
+        //   </View>
+
+        // </MapView.Marker>
+        // {/* </MapView> */}
+
+
+        //   {
+        //     allRestrooms.length < 1 ? null : allRestrooms.map((restroom)=>{
+        //       return (
+        //         <MapView.Marker
+        //         key={restroom.id}
+        //         coordinate={{ 
+        //           latitude: restroom.coordinates.latitude,
+        //           longitude:  restroom.coordinates.longitude
+        //         }}
+        //       >
+        //           </MapView.Marker>
+        //       )
+        //     })
+        //   }
+        //   </MapView>
