@@ -127,7 +127,7 @@ class HomeView extends Component {
               alignItems: "center",
               justifyContent: "center",
               padding: 10
-            }}
+            }} 
           > 
 
           {
@@ -139,7 +139,7 @@ class HomeView extends Component {
                 <Image
                   source={require('./_assets/loading.gif')}
                 />
-            <Text>Loading...</Text>
+            <Text>Loading...</Text> 
             </View> 
           : 
 
@@ -158,7 +158,7 @@ class HomeView extends Component {
                     <View style={styles.radius}> 
                       <View style={styles.marker} />
                     </View>
-                  </MapView.Marker>
+                  </MapView.Marker> 
                     {/* restrooms */}
                     {
                       allRestrooms.length < 1 ? null : allRestrooms.map((restroom)=>{
