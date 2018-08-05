@@ -76,10 +76,10 @@ class HomeView extends Component {
         };
         this.setState({ initialPostion: initalRegion });
         this.setState({ markerPosition: initalRegion });
-      },
+      }, 
       error => this.setState({ error: error.message }),
       {
-        enableHighAccuracy: true,
+        enableHighAccuracy: true, 
         timeout: 2000,
         maximumAge: 1000,
         distanceFilter: 10
@@ -97,6 +97,7 @@ class HomeView extends Component {
       this.setState({initialPostion: lastRegion})
       this.setState({markerPosition: lastRegion})
     })
+    this.forceUpdate()
   }
   
   componentWillUnmount(){
@@ -114,19 +115,19 @@ class HomeView extends Component {
     return (
       <Container>
 
-        {
+        {/* {
           isLoading ? 
           <View style={{ flexGrow: 1, alignItems: 'center', justifyContent: 'center' }}>
           <Text>Loading...</Text>
           {this.state.error ? <Text>Error: {this.state.error}</Text> : null}
         </View>
           
-          :   
+          :    */}
         <Content
           contentContainerStyle={{
             flex: 1,
             alignItems: "center",
-            justifyContent: "center", 
+            justifyContent: "center",   
             padding: 10
           }}
         >
@@ -167,7 +168,7 @@ class HomeView extends Component {
         
 
         </Content>
-        }
+        
       </Container>
     );
   }

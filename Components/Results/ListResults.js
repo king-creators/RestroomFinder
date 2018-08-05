@@ -13,6 +13,9 @@ import ListCard from "./ListCard";
 import { withNavigation, DrawerActions } from "react-navigation";
 import CustomHeader from "../CustomHeader";
 import { Header, Left, Right, Body, Title } from "native-base";
+//importing thunks
+import {getRestroom, Loading} from '../../store/Restrooms'
+import {connect} from 'react-redux'
 
 class ListResults extends Component {
   constructor() {
@@ -24,8 +27,7 @@ class ListResults extends Component {
   };
   render() {
     const { history } = this.props;
-    console.log(this.props, "list results");
-    // console.log(DrawerActions.toggleDrawer());
+    console.log('this is list result!!!!!!!!',this.props.allRestrooms);
     return (
       <React.Fragment>
         <ScrollView>
@@ -39,11 +41,15 @@ class ListResults extends Component {
             }}
           >
             <View>
-              <ListCard history={history} />
-              <ListCard history={history} />
-              <ListCard history={history} />
-              <ListCard history={history} />
-              <ListCard history={history} />
+              {
+                this.props.allRestrooms.map((restroom)=>{
+                  return (
+                    <ListCard history={history} key={restroom.id} restroom={restroom} userLocation={this.props.userCurrentLocation}/>
+                  )
+                })
+              }
+
+              
             </View>
           </Content>
         </ScrollView>
@@ -52,7 +58,29 @@ class ListResults extends Component {
   }
 }
 
-export default withNavigation(ListResults);
+const MapDispatchToProps = dispatch => {
+  return {
+    getRestroom : (userLocation)=> dispatch(getRestroom(userLocation)),
+    Loading : ()=> dispatch(Loading())
+  }
+}
+
+const MapStateToProps = state => {
+  return {
+    allRestrooms : state.restroom.allRestrooms,
+    isLoading : state.restroom.isLoading,
+    oneRestroom : state.restroom.oneRestroom,
+    userCurrentLocation : state.restroom.userCurrentLocation
+  }
+}
+
+export default connect(
+  MapStateToProps,
+  MapDispatchToProps
+) (withNavigation(ListResults));
+
+
+
 
 const styles = StyleSheet.create({
   icon: {

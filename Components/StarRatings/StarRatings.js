@@ -25,7 +25,7 @@ export default class StarRating extends Component {
         path = require("./star-unfilled.png");
       }
 
-      stars.push(<Image style={styles.image} source={path} />);
+      stars.push(<Image style={styles.image} source={path} key={i} />);
     }
 
     return (

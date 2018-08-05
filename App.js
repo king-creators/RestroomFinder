@@ -13,6 +13,7 @@ import Restroom from "./Components/Results/Restroom";
 //Store
 import { Provider } from "react-redux";
 import Store from "./store/store";
+console.disableYellowBox = true;
 
 export default class App extends Component {
 
