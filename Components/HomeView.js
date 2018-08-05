@@ -30,14 +30,13 @@ import { withNavigation, DrawerActions } from "react-navigation";
 
 import { connect } from "react-redux";
 //--------------------------------------------------------------------
-import {getRestroom,Loading} from '../store/Restrooms'
+import { getRestroom, Loading } from "../store/Restrooms";
 const { width, height } = Dimensions.get("window");
 const SCREEN_HEIGHT = height;
 const SCREEN_WIDTH = width;
 const ASPECT_RATION = SCREEN_WIDTH / SCREEN_HEIGHT;
 const LATTITUDE_DELTA = 0.00322;
 const LONGTITUDE_DELTA = LATTITUDE_DELTA * ASPECT_RATION;
-
 
 class HomeView extends Component {
   constructor(props) {
@@ -54,20 +53,17 @@ class HomeView extends Component {
         latitude: 0,
         longitude: 0
       }
-    }
-    allRestrooms : []
+    };
+    allRestrooms: [];
   }
 
-
   componentDidMount() {
-
-    this.props.Loading()
+    this.props.Loading();
     navigator.geolocation.getCurrentPosition(
       position => {
         let lat = parseFloat(position.coords.latitude);
         let long = parseFloat(position.coords.longitude);
 
-        
         this.props.getRestroom({
           latitude: lat,
           longitude: long
@@ -81,10 +77,10 @@ class HomeView extends Component {
         };
         this.setState({ initialPostion: initalRegion });
         this.setState({ markerPosition: initalRegion });
-      }, 
+      },
       error => this.setState({ error: error.message }),
       {
-        enableHighAccuracy: true, 
+        enableHighAccuracy: true,
         timeout: 2000,
         maximumAge: 1000,
         distanceFilter: 10
@@ -95,28 +91,27 @@ class HomeView extends Component {
       let long = parseFloat(position.coords.longitude);
       let lastRegion = {
         latitude: lat,
-        longitude: long, 
-        latitudeDelta: LATTITUDE_DELTA, 
-        longitudeDelta: LONGTITUDE_DELTA,
-      }
-      this.setState({initialPostion: lastRegion})
-      this.setState({markerPosition: lastRegion})
-    })
-    this.forceUpdate()
+        longitude: long,
+        latitudeDelta: LATTITUDE_DELTA,
+        longitudeDelta: LONGTITUDE_DELTA
+      };
+      this.setState({ initialPostion: lastRegion });
+      this.setState({ markerPosition: lastRegion });
+    });
+    this.forceUpdate();
   }
-  
-  componentWillUnmount(){
-    navigator.geolocation.clearWatch(this.watchId)
+
+  componentWillUnmount() {
+    navigator.geolocation.clearWatch(this.watchId);
   }
   toggleDrawer = () => {
     this.props.screenProps.navigation.dispatch(DrawerActions.toggleDrawer());
   };
   render() {
-    const isLoading = this.props.isLoading
+    const isLoading = this.props.isLoading;
 
-    console.log(isLoading)
     const allRestrooms = this.props.allRestrooms;
-    
+    console.log(allRestrooms);
     return (
       <React.Fragment>
         <Container>
@@ -127,91 +122,76 @@ class HomeView extends Component {
               alignItems: "center",
               justifyContent: "center",
               padding: 10
-            }} 
-          > 
-
-          {
-
-
-            isLoading ?  
-            
-            <View style={{ flexGrow: 1, alignItems: 'center', justifyContent: 'center' }}>
-                <Image
-                  source={require('./_assets/loading.gif')}
-                />
-            <Text>Loading...</Text> 
-            </View> 
-          : 
-
- 
-          
-
-
-
-                  <MapView
-                  style={styles.map}
-                  region={this.state.initialPostion}
-                >
-                  <MapView.Marker
-                    coordinate={this.state.markerPosition} 
-                  >
-                    <View style={styles.radius}> 
-                      <View style={styles.marker} />
-                    </View>
-                  </MapView.Marker> 
-                    {/* restrooms */}
-                    {
-                      allRestrooms.length < 1 ? null : allRestrooms.map((restroom)=>{
-                        return (
-                      
-                          <MapView.Marker
+            }}
+          >
+            {isLoading ? (
+              <View
+                style={{
+                  flexGrow: 1,
+                  alignItems: "center",
+                  justifyContent: "center"
+                }}
+              >
+                <Image source={require("./_assets/loading.gif")} />
+                <Text>Loading...</Text>
+              </View>
+            ) : (
+              <MapView style={styles.map} region={this.state.initialPostion}>
+                <MapView.Marker coordinate={this.state.markerPosition}>
+                  <View style={styles.radius}>
+                    <View style={styles.marker} />
+                  </View>
+                </MapView.Marker>
+                {/* restrooms */}
+                {allRestrooms.length < 1
+                  ? null
+                  : allRestrooms.map(restroom => {
+                      return (
+                        <MapView.Marker
                           key={restroom.id}
                           coordinate={{
                             latitude: restroom.coordinates.latitude,
-                            longitude: restroom.coordinates.longitude,
+                            longitude: restroom.coordinates.longitude
                           }}
                           title={restroom.name}
-                          description={restroom.location.address1}
-                          image={require('./_assets/toilet-paper.png')}
-                          >
-                          </MapView.Marker>
-                        ) 
-                      })
-                    }
+                          description={
+                            restroom.location.address1 +
+                            " " +
+                            restroom.location.city +
+                            " " +
+                            restroom.location.state +
+                            " " +
+                            restroom.location.zipCode
+                          }
+                          image={require("./_assets/toilet-paper.png")}
+                        />
+                      );
+                    })}
               </MapView>
-          }
-
-
-
-
-
-        
+            )}
           </Content>
-        </Container>        
-        </React.Fragment> 
-        
+        </Container>
+      </React.Fragment>
     );
-  } 
+  }
 }
- 
+
 const MapDispatchToProps = dispatch => {
   return {
-
-    getRestroom: (userlocation) => dispatch(getRestroom(userlocation)),
-    Loading : ()=> dispatch(Loading())
+    getRestroom: userlocation => dispatch(getRestroom(userlocation)),
+    Loading: () => dispatch(Loading())
   };
 };
 
 const MapStateToProps = state => {
   return {
     allRestrooms: state.restroom.allRestrooms,
-    isLoading : state.restroom.isLoading,
-    oneRestroom : state.restroom.oneRestroom
+    isLoading: state.restroom.isLoading,
+    oneRestroom: state.restroom.oneRestroom
   };
 };
 
 const newHome = withNavigation(HomeView);
-
 
 export default connect(
   MapStateToProps,
@@ -249,11 +229,11 @@ const styles = StyleSheet.create({
     overflow: "hidden",
     backgroundColor: "#007AFF"
   },
-  restroom : {
+  restroom: {
     height: 20,
     width: 20,
     borderWidth: 3,
-    borderColor: "red",
+    borderColor: "red"
   }
 });
 
@@ -306,15 +286,15 @@ const styles = StyleSheet.create({
 //   {
 //     allRestrooms.map((restroom)=>{
 //       return(
-        // <MapView.Marker
-        // key={restroom.id}
-        // coordinate={{
-        //   latitude: restroom.coordinates.latitude,
-        //   longitude:  restroom.coordinates.longitude
-        // }}
-        // >
+// <MapView.Marker
+// key={restroom.id}
+// coordinate={{
+//   latitude: restroom.coordinates.latitude,
+//   longitude:  restroom.coordinates.longitude
+// }}
+// >
 
-        // </MapView.Marker>
+// </MapView.Marker>
 
 //       )
 //     })
@@ -323,60 +303,56 @@ const styles = StyleSheet.create({
 
 // }
 
+//   <MapView
+//   style={styles.map}
+//   region={this.state.initialPostion}
+// >
+//   <MapView.Marker
+//     coordinate={this.state.markerPosition}
+//   >
+//     <View style={styles.radius}>
+//       <View style={styles.marker} />
+//     </View>
+//   </MapView.Marker>
+//     {/* restrooms */}
+//     {
+//       allRestrooms.length < 1 ? null : allRestrooms.map((restroom)=>{
+//         return (
+//           <MapView.Marker
+//           key={restroom.id}
+//           coordinate={{
+//             latitude: restroom.coordinates.latitude,
+//             longitude: restroom.coordinates.longitude,
+//           }}
 
+//           >
+//           </MapView.Marker>
+//         )
+//       })
+//     }
+//   </MapView>
 
+// <MapView style={styles.map} region={this.state.initialPostion}>
+// <MapView.Marker coordinate={this.state.markerPosition}>
+//   <View style={styles.radius}>
+//     <View style={styles.marker} />
+//   </View>
 
-        //   <MapView
-        //   style={styles.map}
-        //   region={this.state.initialPostion}
-        // >
-        //   <MapView.Marker
-        //     coordinate={this.state.markerPosition} 
-        //   >
-        //     <View style={styles.radius}> 
-        //       <View style={styles.marker} />
-        //     </View>
-        //   </MapView.Marker>
-        //     {/* restrooms */}
-        //     {
-        //       allRestrooms.length < 1 ? null : allRestrooms.map((restroom)=>{
-        //         return (
-        //           <MapView.Marker
-        //           key={restroom.id}
-        //           coordinate={{
-        //             latitude: restroom.coordinates.latitude,
-        //             longitude: restroom.coordinates.longitude,
-        //           }}
-                  
-        //           >
-        //           </MapView.Marker>
-        //         ) 
-        //       })
-        //     }
-        //   </MapView>
+// </MapView.Marker>
+// {/* </MapView> */}
 
-        // <MapView style={styles.map} region={this.state.initialPostion}>
-        // <MapView.Marker coordinate={this.state.markerPosition}>
-        //   <View style={styles.radius}>
-        //     <View style={styles.marker} />
-        //   </View>
-
-        // </MapView.Marker>
-        // {/* </MapView> */}
-
-
-        //   {
-        //     allRestrooms.length < 1 ? null : allRestrooms.map((restroom)=>{
-        //       return (
-        //         <MapView.Marker
-        //         key={restroom.id}
-        //         coordinate={{ 
-        //           latitude: restroom.coordinates.latitude,
-        //           longitude:  restroom.coordinates.longitude
-        //         }}
-        //       >
-        //           </MapView.Marker>
-        //       )
-        //     })
-        //   }
-        //   </MapView>
+//   {
+//     allRestrooms.length < 1 ? null : allRestrooms.map((restroom)=>{
+//       return (
+//         <MapView.Marker
+//         key={restroom.id}
+//         coordinate={{
+//           latitude: restroom.coordinates.latitude,
+//           longitude:  restroom.coordinates.longitude
+//         }}
+//       >
+//           </MapView.Marker>
+//       )
+//     })
+//   }
+//   </MapView>
