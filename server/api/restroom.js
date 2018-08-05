@@ -11,6 +11,9 @@ router.post("/", async (req, res, next) => {
   try {
     const searchRequest = {
       term:'restaurants+fast+food+coffee+shop',
+      radius: "6218",
+      sort_by : 'distance',
+
       latitude : req.body.latitude,
       longitude: req.body.longitude,
       radius: "6437"

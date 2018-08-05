@@ -33,12 +33,12 @@ class ListCard extends Component {
   handleGetDirections = () => {
     const data = {
       source: {
-        latitude: 40.704941,
-        longitude: -74.008943
+        latitude: this.props.userLocation.latitude,
+        longitude: this.props.userLocation.longitude
       },
       destination: {
-        latitude: 40.703673,
-        longitude: -74.010738
+        latitude: this.props.restroom.coordinates.latitude,
+        longitude: this.props.restroom.coordinates.longitude
       },
       params: [
         {
@@ -54,12 +54,18 @@ class ListCard extends Component {
 
     getDirections(data);
   };
+    getMiles(i) {
+    return (i*0.000621371192).toFixed(2);
+}
+  
   render() {
-    const { history } = this.props;
+  
+    const { history, restroom } = this.props;
     const ratingObj = {
-      ratings: 4,
-      views: 100
+      ratings: restroom.rating,
+      views: restroom.review_count
     };
+    
     return (
       <React.Fragment>
         <View style={styles.container}>
@@ -68,7 +74,7 @@ class ListCard extends Component {
               <CardButton
                 style={styles.top}
                 onPress={() => history.push("/Restroom")}
-                title="Name of Restaurant"
+                title={restroom.name}
                 color="#FEB557"
               />
 
@@ -77,7 +83,7 @@ class ListCard extends Component {
               </Right>
             </CardAction>
 
-            <CardContent styles={styles.bottom} text="123 Main St." />
+            <CardContent styles={styles.bottom} text={restroom.location.address1} />
             <CardContent
               styles={styles.bottom}
               text="Average Wait Time: 10 minutes"
@@ -97,7 +103,7 @@ class ListCard extends Component {
               />
 
               <Right style={styles.right}>
-                <Text>0.5 miles</Text>
+                <Text>{this.getMiles(restroom.distance)} miles</Text>
               </Right>
             </CardAction>
             {/* </CardAction> */}

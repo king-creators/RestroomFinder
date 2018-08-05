@@ -13,6 +13,7 @@ import {
     GOT_RESTROOM
 } from "./actionsType";
 const LOADING = 'LOADING'
+const USER_LOCATION = 'USER_LOCATION'
 
 
 // //----------------------------------------------------------------
@@ -20,6 +21,7 @@ const LOADING = 'LOADING'
 // //----------------------------------------------------------------
 const gotRestrooms = payload => ({type: GOT_RESTROOM, payload})
 const loading = () => ({type:LOADING})
+const userLocationAction = (payload) => ({type: USER_LOCATION, payload})
 
 
 // //----------------------------------------------------------------
@@ -29,7 +31,7 @@ const loading = () => ({type:LOADING})
 export const getRestroom = userLocation => async dispatch =>{
         try {
 
-        console.log('here in thunks')
+        dispatch(userLocationAction(userLocation))
         const result = await axios.post(`${path}/restroom/`,userLocation)
         dispatch(gotRestrooms(result.data))
         } catch (error) {
@@ -55,11 +57,17 @@ export const Loading = ()=> dispatch =>{
 const initialstate = {
     allRestrooms : [],
     isLoading : false,
-    oneRestroom : {}
+    oneRestroom : {},
+    userCurrentLocation: null
 }
 
 const restroomReducer = (state = initialstate, action) => {
     switch (action.type) {
+        case USER_LOCATION:
+        return {
+            ...state,
+            userCurrentLocation : action.payload
+        }
         case GOT_RESTROOM:
         return {
             ...state,
