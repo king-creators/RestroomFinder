@@ -7,7 +7,7 @@ const Restroom = db.define("restroom", {
     allowNull: false
   },
   waitTime: {
-    type: Sequelize.INTEGER
+    type: Sequelize.ARRAY(Sequelize.TEXT)
   }
 });
 
