@@ -4,7 +4,7 @@ import axios from "axios";
 const path ='http://172.16.23.222:3000/api' //prince 
 
 
-const path = "http://172.16.23.224:3000/api"; //Gini
+// const path = "http://172.16.23.224:3000/api"; //Gini
 
 // //----------------------------------------------------------------
 // //Constants
@@ -52,7 +52,7 @@ export const getWaitTime = yelpId => async dispatch => {
   } catch (error) {
     console.error(error);
   }
-};
+}; 
 
 export const getRestroom = userLocation => async dispatch => {
   try {
