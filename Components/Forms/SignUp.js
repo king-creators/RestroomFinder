@@ -17,6 +17,14 @@ import ListResults from "../Results/ListResults";
 import Go from "../Go";
 import Ionicons from "react-native-vector-icons/Ionicons";
 
+import {LogIn} from '../../store/User'
+
+import createHistory from 'history/createMemoryHistory'
+
+const history = createHistory()
+
+// import { userInfo } from "os";
+
 class SignUp extends Component {
   constructor(props) {
     super(props);
@@ -29,20 +37,13 @@ class SignUp extends Component {
     this.onSubmit = this.onSubmit.bind(this);
   }
   onSubmit() {
-    console.log(this.state);
-    // this.props.addUser(this.state);
+    this.props.LogIn(this.state)
+    // history.push('Home')
+    
   }
   static navigationOptions = ({ navigation }) => ({
     title: "Sign Up",
     drawerIcon: () => <Ionicons name="md-create" size={24} />
-    // (
-    // <Image
-    //   source="https://png.icons8.com/metro/1600/settings.png"
-    //   style={[styles.icon]}
-    // />
-    //   <ion-icon ios="ios-log-in" md="md-log-in" />
-
-    // )
   });
   render() {
     return (
@@ -88,7 +89,6 @@ class SignUp extends Component {
     );
   }
 }
-
 const styles = StyleSheet.create({
   icon: {
     height: 24,
@@ -96,4 +96,16 @@ const styles = StyleSheet.create({
   }
 });
 
-export default SignUp;
+const MapStateToProps = state => {
+  return {
+    user : state.user
+  }
+}
+
+const MapDispatchToProps = dispatch => {
+  return {
+    LogIn : (userInfo) => (dispatch(LogIn(userInfo)))
+  }
+}
+
+export default connect(MapStateToProps,MapDispatchToProps)(SignUp)

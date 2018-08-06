@@ -37,6 +37,9 @@ const SCREEN_WIDTH = width;
 const ASPECT_RATION = SCREEN_WIDTH / SCREEN_HEIGHT;
 const LATTITUDE_DELTA = 0.00322;
 const LONGTITUDE_DELTA = LATTITUDE_DELTA * ASPECT_RATION;
+import getDirections from "react-native-google-maps-directions";
+
+
 
 
 class HomeView extends Component {
@@ -45,7 +48,7 @@ class HomeView extends Component {
     this.state = {
       initialPostion: {
         latitude: 0,
-        longitude: 0,
+        longitude: 0, 
         latitudeDelta: 0,
         longitudeDelta: 0,
         error: null
@@ -55,8 +58,36 @@ class HomeView extends Component {
         longitude: 0
       }
     }
-    allRestrooms : []
+    this.handleGetDirections = this.handleGetDirections.bind(this)
   }
+
+  //Google
+
+  handleGetDirections = (restroomLocation) => {
+    console.log(restroomLocation)
+    const data = {
+      source: {
+        latitude: this.state.initialPostion.latitude,
+        longitude: this.state.initialPostion.longitude
+      },
+      destination: {
+        latitude: restroomLocation.latitude,
+        longitude: restroomLocation.longitude
+      },
+      params: [
+        {
+          key: "travelmode",
+          value: "walking" // may be "walking", "bicycling" or "transit" as well
+        },
+        {
+          key: "dir_action",
+          value: "navigate" // this instantly initializes navigation using the given travel mode
+        }
+      ]
+    };
+  
+    getDirections(data);
+  };
 
 
   componentDidMount() {
@@ -136,9 +167,9 @@ class HomeView extends Component {
             isLoading ?  
             
             <View style={{ flexGrow: 1, alignItems: 'center', justifyContent: 'center' }}>
-                <Image
+                {/* <Image
                   source={require('./_assets/loading.gif')}
-                />
+                /> */}
             <Text>Loading...</Text> 
             </View> 
           : 
@@ -171,8 +202,9 @@ class HomeView extends Component {
                             longitude: restroom.coordinates.longitude,
                           }}
                           title={restroom.name}
-                          description={restroom.location.address1}
+                          description= {restroom.location.address1}
                           image={require('./_assets/toilet-paper.png')}
+                          onPress={() => (this.handleGetDirections(restroom.coordinates))}
                           >
                           </MapView.Marker>
                         ) 
@@ -207,6 +239,7 @@ const MapStateToProps = state => {
     allRestrooms: state.restroom.allRestrooms,
     isLoading : state.restroom.isLoading,
     oneRestroom : state.restroom.oneRestroom
+
   };
 };
 

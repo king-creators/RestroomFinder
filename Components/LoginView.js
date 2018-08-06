@@ -20,7 +20,7 @@ class LoginView extends Component {
       />
     ),
     drawerLabel: "Home",
-    drawerIcon: ({ tintColor }) => (
+    drawerIcon: ({ tintColor }) => ( 
       <Image
         source="https://png.icons8.com/metro/1600/settings.png"
         style={styles.icon}

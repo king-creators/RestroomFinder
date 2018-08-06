@@ -2,7 +2,7 @@
 import axios from "axios";
 // const path = "http://localhost:3000/api";
 
-const path ='http://172.16.26.248:3000/api'
+const path ='http://172.16.23.222:3000/api'
 
 // const path = "http://172.16.25.38:3000/api";
 
@@ -70,7 +70,7 @@ const restroomReducer = (state = initialstate, action) => {
       return {
         ...state,
         allRestrooms: action.payload,
-        isLoading: false
+        isLoading: false 
       };
     case LOADING:
       return {

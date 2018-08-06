@@ -128,7 +128,7 @@ class ListCard extends Component {
                 title="Get Directions"
               />
               <Icon
-                style={{ marginleft: 15, fontSize: 20, color: "#FEB557" }}
+                style={{ marginLeft: 15, fontSize: 20, color: "#FEB557" }}
                 name="md-arrow-dropright"
                 onPress={this.handleGetDirections}
               />
