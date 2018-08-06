@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import {
   View,
   Text,
+  ActivityIndicator,
+  AppRegistry,
   StyleSheet,
   Image,
   TouchableOpacity,
@@ -166,18 +168,18 @@ class HomeView extends Component {
 
             isLoading ?  
             
-            <View style={{ flexGrow: 1, alignItems: 'center', justifyContent: 'center' }}>
+            <View style={[styles.container, styles.horizontal]}>
                 {/* <Image
                   source={require('./_assets/loading.gif')}
                 /> */}
-            <Text>Loading...</Text> 
+            <ActivityIndicator size="large" color="#fba919" /> 
             </View> 
           : 
 
- 
+
           
 
-
+ 
 
                   <MapView
                   style={styles.map}
@@ -287,6 +289,15 @@ const styles = StyleSheet.create({
     width: 20,
     borderWidth: 3,
     borderColor: "red",
+  },
+  container: {
+    flex: 1,
+    justifyContent: 'center'
+  },
+  horizontal: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    padding: 10
   }
 });
 
