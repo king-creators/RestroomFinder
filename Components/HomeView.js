@@ -219,7 +219,7 @@ class HomeView extends Component {
                       );
                     })}
               </MapView>
-            )}
+                  }
           </Content>
         </Container>
       </React.Fragment>
