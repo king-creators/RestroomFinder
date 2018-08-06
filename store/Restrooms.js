@@ -52,7 +52,7 @@ export const getWaitTime = yelpId => async dispatch => {
   } catch (error) {
     console.error(error);
   }
-};
+}; 
 
 export const getRestroom = userLocation => async dispatch => {
   try {
