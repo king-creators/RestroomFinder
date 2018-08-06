@@ -204,7 +204,7 @@ class HomeView extends Component {
                           title={restroom.name}
                           description= {restroom.location.address1}
                           image={require('./_assets/toilet-paper.png')}
-                          onPress={() => (this.handleGetDirections(restroom.coordinates))}
+                          // onPress={() => (this.handleGetDirections(restroom.coordinates))}
                           >
                           </MapView.Marker>
                         ) 
