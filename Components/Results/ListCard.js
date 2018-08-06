@@ -1,5 +1,12 @@
 import React, { Component } from "react";
-import { StyleSheet, Text, View, PixelRatio, ScrollView } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  PixelRatio,
+  ScrollView,
+  TouchableOpacity
+} from "react-native";
 import {
   Card,
   CardTitle,
@@ -24,12 +31,18 @@ import { withNavigation } from "react-navigation";
 import StarRating from "../StarRatings/StarRatings";
 // import SubNav from "../Restroom";
 import getDirections from "react-native-google-maps-directions";
+import { connect } from "react-redux";
+import { getRating, getWaitTime } from "../../store/Restrooms";
 
 class ListCard extends Component {
   constructor() {
     super();
     this.handleGetDirections = this.handleGetDirections.bind(this);
   }
+  // componentDidMount() {
+  //   this.props.getRating(this.props.restroom.id);
+  //   this.props.getWaitTime(this.props.restroom.id);
+  // }
   handleGetDirections = () => {
     const data = {
       source: {
@@ -60,9 +73,12 @@ class ListCard extends Component {
 
   render() {
     const { history, restroom } = this.props;
+    // console.log(this.props.restroom.id);
     const ratingObj = {
       ratings: restroom.rating,
       views: restroom.review_count
+      // ratings: this.props.ratings.rating ? this.props.ratings.rating : 0,
+      // views: this.props.ratings.views ? this.props.ratings.views : 0
     };
 
     return (
@@ -72,18 +88,22 @@ class ListCard extends Component {
             <CardAction
               separator={false}
               inColumn={false}
-              style={{ backgroundColor: "#FEB557", marginBottom: 10 }}
+              style={{
+                backgroundColor: "#FEB557",
+                marginBottom: 10,
+                width: "100%"
+              }}
             >
               <CardButton
                 style={styles.top}
+                title={restroom.name}
+                color="white"
                 onPress={() =>
                   history.push({
                     pathname: "/Restroom",
                     state: this.props.restroom
                   })
                 }
-                title={restroom.name}
-                color="white"
               />
 
               <Right>
@@ -128,7 +148,7 @@ class ListCard extends Component {
                 title="Get Directions"
               />
               <Icon
-                style={{ marginleft: 15, fontSize: 20, color: "#FEB557" }}
+                style={{ marginLeft: 15, fontSize: 20, color: "#FEB557" }}
                 name="md-arrow-dropright"
                 onPress={this.handleGetDirections}
               />
@@ -144,7 +164,24 @@ class ListCard extends Component {
   }
 }
 
-export default ListCard;
+const mapStateToProps = state => {
+  return {
+    ratings: state.restroom.restroomRating,
+    waitTime: state.restroom.restroomWaitTime
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    getRating: yelpId => dispatch(getRating(yelpId)),
+    getWaitTime: yelpId => dispatch(getWaitTime(yelpId))
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(ListCard);
 
 const styles = StyleSheet.create({
   container: {
@@ -164,23 +201,4 @@ const styles = StyleSheet.create({
     marginTop: 0,
     paddingTop: 0
   }
-  //   content: {
-  //     // flex: 1,
-  //     // width: 25,
-  //     // height: 25,
-  //     // backgroundColor: "orange"
-  //     width: "100%"
-  //   }
 });
-
-// const SubStack = createStackNavigator({
-//   Restroom: {
-//     screen: Restroom
-//   }
-// });
-
-// class SubNav extends React.Component {
-//   render() {
-//     return <SubStack />;
-//   }
-// }

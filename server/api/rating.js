@@ -33,9 +33,9 @@ router.post("/", async (req, res, next) => {
         }
         return arr;
       };
-      res.json(Math.round(average(theArr)));
+      res.json({ rating: Math.round(average(theArr)), views: ratings.length });
     } else {
-      res.send("No wait time information");
+      res.send("Wait Time Unknown");
     }
   } catch (error) {
     next(error);
