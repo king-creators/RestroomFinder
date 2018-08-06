@@ -54,7 +54,6 @@ class HomeView extends Component {
         longitude: 0
       }
     };
-    allRestrooms: [];
   }
 
   componentDidMount() {
@@ -111,7 +110,7 @@ class HomeView extends Component {
     const isLoading = this.props.isLoading;
 
     const allRestrooms = this.props.allRestrooms;
-    console.log(allRestrooms);
+    // console.log(allRestrooms);
     return (
       <React.Fragment>
         <Container>
@@ -142,7 +141,7 @@ class HomeView extends Component {
                     <View style={styles.marker} />
                   </View>
                 </MapView.Marker>
-                {/* restrooms */}
+
                 {allRestrooms.length < 1
                   ? null
                   : allRestrooms.map(restroom => {
@@ -191,7 +190,7 @@ const MapStateToProps = state => {
   };
 };
 
-const newHome = withNavigation(HomeView);
+// const newHome = withNavigation(HomeView);
 
 export default connect(
   MapStateToProps,
