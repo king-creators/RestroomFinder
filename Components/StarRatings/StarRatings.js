@@ -31,7 +31,9 @@ export default class StarRating extends Component {
     return (
       <View style={styles.container}>
         {stars}
-        <Text style={styles.text}>({ratingObj.views})</Text>
+        <Text style={styles.text} style={{ color: "#666666" }}>
+          ({ratingObj.views})
+        </Text>
         }
       </View>
     );
@@ -50,6 +52,7 @@ const styles = StyleSheet.create({
   text: {
     fontSize: 15,
     marginLeft: 10,
-    marginRight: 10
+    marginRight: 10,
+    color: "#666666"
   }
 });
