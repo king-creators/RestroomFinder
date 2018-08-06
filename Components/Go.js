@@ -49,7 +49,7 @@ class Go extends Component {
   render() {
     console.log(this.props);
     return (
-      <Container>
+      <Container style={{ backgroundColor: "#fba919" }}>
         <CustomHeader title="Nearest You" />
         <Content
           contentContainerStyle={{
@@ -85,7 +85,9 @@ const styles = StyleSheet.create({
     height: 24
   },
   submit: {
-    backgroundColor: "#119eec",
+    borderColor: "#ff8100",
+    borderWidth: 10,
+    backgroundColor: "#f15a29",
     overflow: "hidden",
     borderRadius: 125,
     width: 250,
@@ -93,7 +95,7 @@ const styles = StyleSheet.create({
     fontSize: 100,
     color: "white",
     fontWeight: "bold",
-    paddingTop: 65
+    paddingTop: 60
   },
   text: {
     fontSize: 25,

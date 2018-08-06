@@ -97,7 +97,7 @@ class ListCard extends Component {
               <CardButton
                 style={styles.top}
                 title={restroom.name}
-                color="white"
+                color="#444444"
                 onPress={() =>
                   history.push({
                     pathname: "/Restroom",
@@ -108,7 +108,7 @@ class ListCard extends Component {
 
               <Right>
                 <Icon
-                  style={{ color: "white", marginRight: 15 }}
+                  style={{ color: "#444444", marginRight: 15 }}
                   name="arrow-dropright"
                   onPress={() =>
                     history.push({
@@ -153,7 +153,9 @@ class ListCard extends Component {
                 onPress={this.handleGetDirections}
               />
               <Right style={styles.right}>
-                <Text>{this.getMiles(restroom.distance)} miles</Text>
+                <Text style={{ color: "#666666" }}>
+                  {this.getMiles(restroom.distance)} miles
+                </Text>
               </Right>
             </CardAction>
             {/* </CardAction> */}
