@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import {
   View,
   Text,
+  ActivityIndicator,
+  AppRegistry,
   StyleSheet,
   Image,
   TouchableOpacity,
@@ -37,6 +39,9 @@ const SCREEN_WIDTH = width;
 const ASPECT_RATION = SCREEN_WIDTH / SCREEN_HEIGHT;
 const LATTITUDE_DELTA = 0.00322;
 const LONGTITUDE_DELTA = LATTITUDE_DELTA * ASPECT_RATION;
+import getDirections from "react-native-google-maps-directions";
+
+
 
 class HomeView extends Component {
   constructor(props) {
@@ -44,7 +49,7 @@ class HomeView extends Component {
     this.state = {
       initialPostion: {
         latitude: 0,
-        longitude: 0,
+        longitude: 0, 
         latitudeDelta: 0,
         longitudeDelta: 0,
         error: null
@@ -53,8 +58,40 @@ class HomeView extends Component {
         latitude: 0,
         longitude: 0
       }
-    };
+
+    }
+    this.handleGetDirections = this.handleGetDirections.bind(this)
   }
+
+  //Google
+
+  handleGetDirections = (restroomLocation) => {
+    console.log(restroomLocation)
+    const data = {
+      source: {
+        latitude: this.state.initialPostion.latitude,
+        longitude: this.state.initialPostion.longitude
+      },
+      destination: {
+        latitude: restroomLocation.latitude,
+        longitude: restroomLocation.longitude
+      },
+      params: [
+        {
+          key: "travelmode",
+          value: "walking" // may be "walking", "bicycling" or "transit" as well
+        },
+        {
+          key: "dir_action",
+          value: "navigate" // this instantly initializes navigation using the given travel mode
+        }
+      ]
+    };
+  
+    getDirections(data);
+  };
+
+
 
   componentDidMount() {
     this.props.Loading();
@@ -121,38 +158,52 @@ class HomeView extends Component {
               alignItems: "center",
               justifyContent: "center",
               padding: 10
-            }}
-          >
-            {isLoading ? (
-              <View
-                style={{
-                  flexGrow: 1,
-                  alignItems: "center",
-                  justifyContent: "center"
-                }}
-              >
-                <Image source={require("./_assets/loading.gif")} />
-                <Text>Loading...</Text>
-              </View>
-            ) : (
-              <MapView style={styles.map} region={this.state.initialPostion}>
-                <MapView.Marker coordinate={this.state.markerPosition}>
-                  <View style={styles.radius}>
-                    <View style={styles.marker} />
-                  </View>
-                </MapView.Marker>
+            }} 
+          > 
 
-                {allRestrooms.length < 1
-                  ? null
-                  : allRestrooms.map(restroom => {
-                      return (
-                        <MapView.Marker
+          {
+
+
+            isLoading ?  
+            
+            <View style={[styles.container, styles.horizontal]}>
+                {/* <Image
+                  source={require('./_assets/loading.gif')}
+                /> */}
+            <ActivityIndicator size="large" color="#fba919" /> 
+            </View> 
+          : 
+
+
+          
+
+ 
+
+                  <MapView
+                  style={styles.map}
+                  region={this.state.initialPostion}
+                >
+                  <MapView.Marker
+                    coordinate={this.state.markerPosition} 
+                  >
+                    <View style={styles.radius}> 
+                      <View style={styles.marker} />
+                    </View>
+                  </MapView.Marker> 
+                    {/* restrooms */}
+                    {
+                      allRestrooms.length < 1 ? null : allRestrooms.map((restroom)=>{
+                        return (
+                      
+                          <MapView.Marker
+
                           key={restroom.id}
                           coordinate={{
                             latitude: restroom.coordinates.latitude,
                             longitude: restroom.coordinates.longitude
                           }}
                           title={restroom.name}
+
                           description={
                             restroom.location.address1 +
                             " " +
@@ -162,6 +213,7 @@ class HomeView extends Component {
                             " " +
                             restroom.location.zip_code
                           }
+                          // onPress={() => (this.handleGetDirections(restroom.coordinates))}
                           image={require("./_assets/toilet-paper.png")}
                         />
                       );
@@ -232,7 +284,17 @@ const styles = StyleSheet.create({
     height: 20,
     width: 20,
     borderWidth: 3,
-    borderColor: "red"
+    borderColor: "red",
+  },
+  container: {
+    flex: 1,
+    justifyContent: 'center'
+  },
+  horizontal: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    padding: 10
+
   }
 });
 
